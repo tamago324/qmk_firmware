@@ -1,1 +1,1 @@
-#define USE_SERIAL
+#define USB_I2C
