@@ -1,6 +1,6 @@
-# AzulS46
+# korpo44
 
-![AzulS46](imgur.com image replace me!)
+![korpo44](imgur.com image replace me!)
 
 *A short description of the keyboard/project*
 
@@ -10,10 +10,14 @@
 
 Make example for this keyboard (after setting up your build environment):
 
-    make AzulS46:default
+    make korpo44:default
 
 Flashing example for this keyboard:
 
-    make AzulS46:default:flash
+    make korpo44:default:flash
+
+Use Via:
+    
+    make korpo44:via:flash
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).

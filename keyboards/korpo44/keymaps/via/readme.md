@@ -1,1 +1,1 @@
-# The default keymap for AzulS46
+# The default keymap for korpo44
