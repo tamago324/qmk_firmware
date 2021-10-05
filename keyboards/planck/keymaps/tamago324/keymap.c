@@ -15,6 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "jtu_custom_keycodes.h"
 #include "keymap_jp.h"
 
 enum layer_number {
@@ -26,31 +27,30 @@ enum layer_number {
 };
 
 enum custom_keycodes {
-  QWERTY = SAFE_RANGE,
+  QWERTY = JTU_SAFE_RANGE,
   LOWER,
   RAISE,
-  ADJUST,
-  S_SPACE
+  ADJUST
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_QWERTY] = LAYOUT(
-      KC_TAB,        JP_Q,    JP_W,    JP_E,    JP_R,  JP_T,   JP_Y,        JP_U,  JP_I,    JP_O,    JP_P,    KC_BSPC, \
-      KC_LCTRL,      JP_A,    JP_S,    JP_D,    JP_F,  JP_G,   JP_H,        JP_J,  JP_K,    JP_L,    JP_SCLN, KC_ENT, \
-      KC_LSHIFT,     JP_Z,    JP_X,    JP_C,    JP_V,  JP_B,   JP_N,        JP_M,  JP_COMM, JP_DOT,  JP_SLSH, XXXXXXX, \
+      KC_TAB,        KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,        KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC, \
+      KC_LCTRL,      KC_A,    KC_S,    KC_D,    KC_F,  KC_G,   KC_H,        KC_J,  KC_K,    KC_L,    JU_SCLN, KC_ENT, \
+      KC_LSHIFT,     KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,   KC_N,        KC_M,  KC_COMM, KC_DOT,  KC_SLSH, XXXXXXX, \
       MO(_SPECIAL), _______, KC_LGUI, KC_LALT, LOWER, SFT_T(KC_SPACE),     SFT_T(KC_SPACE),  RAISE, KC_RALT, _______, _______, _______ \
     ),
     [_LOWER] = LAYOUT(
-      KC_ESC,  JP_EXLM, JP_AT,   JP_HASH, JP_DLR,  JP_PERC,       JP_CIRC, JP_AMPR, JP_ASTR, JP_LPRN, JP_RPRN, KC_DEL, \
-      _______, C(JP_A), C(JP_S), C(JP_D), C(JP_F), C(JP_G),       JP_MINS, JP_EQL,  JP_LBRC, JP_RBRC, JP_BSLS, JP_TILD,  \
-      _______, C(JP_Z), C(JP_X), C(JP_C), C(JP_V), C(JP_B),       JP_UNDS, JP_PLUS, JP_LCBR, JP_RCBR, JP_PIPE, XXXXXXX, \
+      KC_ESC,  KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  KC_PERC,       JP_AMPR, JP_QUOT, JP_ASTR, JP_LPRN, JP_RPRN, KC_DEL, \
+      _______, C(KC_A), C(KC_S), C(KC_D), C(KC_F), C(KC_G),       JU_MINS, JU_EQL,  JU_LBRC, JU_RBRC, JU_BSLS, JP_TILD, \
+      _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), C(KC_B),       JP_UNDS, JP_PLUS, JP_LCBR, JP_RCBR, JP_PIPE, XXXXXXX, \
       _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ \
     ),
     [_RAISE] = LAYOUT(
-      _______, JP_1,    JP_2,    JP_3,    JP_4,    JP_5,          JP_6,     JP_7,     JP_8,     JP_9,    JP_0,    XXXXXXX, \
-      _______, JP_DQUO, JP_DQUO, JP_QUOT, JP_QUOT, JP_GRV,        KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT, XXXXXXX,  XXXXXXX, \
-      _______, XXXXXXX, XXXXXXX, JP_COMM,  JP_DOT, XXXXXXX,       KC_HOME,  KC_PGUP,  KC_PGDN,  KC_END,  XXXXXXX, XXXXXXX, \
+      _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,          KC_6,     KC_7,     KC_8,     KC_9,    KC_0,    XXXXXXX, \
+      _______, XXXXXXX, JU_QUOT, JU_QUOT, JU_QUOT, JU_GRV,        KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT, XXXXXXX,  XXXXXXX, \
+      _______, XXXXXXX, XXXXXXX, KC_COMM,  KC_DOT, XXXXXXX,       KC_HOME,  KC_PGUP,  KC_PGDN,  KC_END,  XXXXXXX, XXXXXXX, \
       _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ \
     ),
     [_ADJUST] = LAYOUT(
@@ -76,6 +76,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     set_keylog(keycode, record);
 #endif
     // set_timelog();
+  }
+
+  bool continue_process = process_record_user_jtu(keycode, record);
+  if (continue_process == false) {
+    return false;
   }
 
   // lower で無変換、raise で変換
@@ -130,24 +135,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
 
-    // case S_SPACE:
-    //     if (record->event.pressed) {
-    //         // 押した
-    //         sspace_pressed = true;
-    //         space_after_inputed = false;
-    //     } else {
-    //         // 離した
-    //         if (!space_after_inputed) {
-    //             // もし、なにも入力されていなければ、スペースを送信
-    //             tap_code(JP_SPACE);
-    //         }
-    //         sspace_pressed = false;
-    //     }
-
-    //     // QMK としてはデフォルトのキーコードは送信しない
-    //     return false;
-    //     break;
-
     default:
       if (record->event.pressed) {
           // LOWER でもRAISEでもない文字だった場合、戻しておく
@@ -155,29 +142,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         raise_pressed = false;
       }
 
-        // // もし、sspace が押しっぱなしだったら、Shiftを押した状態としてキーを送信する
-        // if (sspace_pressed) {
-        //     if (record->event.pressed) {
-        //         // Shiftを押した状態でキーコードを送信する
-        //         register_code16(S(keycode));
-        //         unregister_code16(S(keycode));
-        //         space_after_inputed = true;
-        //     }
-        //     return false;
-        // }
       break;
   }
 
   return true;
 }
-
-// //キーごとに TAPPING_TERM を設定する
-// uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         case SFT_T(JP_SPACE):
-//             // 短くする
-//             return TAPPING_TERM - 100;
-//         default:
-//             return TAPPING_TERM;
-//     }
-// }
