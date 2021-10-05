@@ -15,7 +15,6 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "jtu_custom_keycodes.h"
 #include "keymap_jp.h"
 
 enum layer_number {
@@ -27,10 +26,12 @@ enum layer_number {
 };
 
 enum custom_keycodes {
-  QWERTY = JTU_SAFE_RANGE,
+  QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
-  ADJUST
+  ADJUST,
+  JU_SCLN,
+  JU_QUOT
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -43,13 +44,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_LOWER] = LAYOUT(
       KC_ESC,  KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  KC_PERC,       JP_AMPR, JP_QUOT, JP_ASTR, JP_LPRN, JP_RPRN, KC_DEL, \
-      _______, C(KC_A), C(KC_S), C(KC_D), C(KC_F), C(KC_G),       JU_MINS, JU_EQL,  JU_LBRC, JU_RBRC, JU_BSLS, JP_TILD, \
+      _______, C(KC_A), C(KC_S), C(KC_D), C(KC_F), C(KC_G),       JP_MINS, JP_EQL,  JP_LBRC, JP_RBRC, JP_BSLS, JP_TILD, \
       _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), C(KC_B),       JP_UNDS, JP_PLUS, JP_LCBR, JP_RCBR, JP_PIPE, XXXXXXX, \
       _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ \
     ),
     [_RAISE] = LAYOUT(
       _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,          KC_6,     KC_7,     KC_8,     KC_9,    KC_0,    XXXXXXX, \
-      _______, XXXXXXX, JU_QUOT, JU_QUOT, JU_QUOT, JU_GRV,        KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT, XXXXXXX,  XXXXXXX, \
+      _______, XXXXXXX, JU_QUOT, JU_QUOT, JU_QUOT, JP_TILD,        KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT, XXXXXXX,  XXXXXXX, \
       _______, XXXXXXX, XXXXXXX, KC_COMM,  KC_DOT, XXXXXXX,       KC_HOME,  KC_PGUP,  KC_PGDN,  KC_END,  XXXXXXX, XXXXXXX, \
       _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ \
     ),
@@ -78,10 +79,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // set_timelog();
   }
 
-  bool continue_process = process_record_user_jtu(keycode, record);
-  if (continue_process == false) {
-    return false;
-  }
+  // 日本語配列の制御のためのもの
+  // https://scrapbox.io/self-made-kbds-ja/QMK_Firmware_%E3%81%A7_JP_%E9%85%8D%E5%88%97%E3%81%AE%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89%E3%82%92%E4%BD%9C%E3%82%8B
+  // https://discord.com/channels/376937950409392130/448305600372408326/576610674617221120
+  // https://github.com/qmk/qmk_firmware/blob/master/keyboards/ergo42/keymaps/hdbx/keymap.c
+  static bool lshift = false;
 
   // lower で無変換、raise で変換
   // https://okapies.hateblo.jp/entry/2019/02/02/133953
@@ -134,6 +136,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+
+    case JU_QUOT:
+      // 単体で ' でShift通すと "
+      if (record->event.pressed) {
+        lshift = keyboard_report->mods & MOD_BIT(KC_LSFT);
+        if (lshift) {
+          // https://docs.qmk.fm/#/ja/feature_macros?id=register_code16ltkcgt%e3%80%81unregister_code16ltkcgt%e3%80%81tap_code16ltkcgt
+          // ここ、tap_code16 とかでもいいのかな？
+          if (lshift) unregister_code(KC_LSFT);
+          register_code(KC_LSFT);
+          register_code(KC_2);
+          unregister_code(KC_2);
+          unregister_code(KC_LSFT);
+          if (lshift) register_code(KC_LSFT);
+        } else {
+          register_code(KC_LSFT);
+          register_code(KC_7);
+          unregister_code(KC_7);
+          unregister_code(KC_LSFT);
+        }
+      }
+      return false;
+
+    case JU_SCLN:
+      // 単体で ; でShift通すと :
+      if (record->event.pressed) {
+        lshift = keyboard_report->mods & MOD_BIT(KC_LSFT);
+        if (lshift) {
+          if (lshift) unregister_code(KC_LSFT);
+          register_code(KC_QUOT);
+          unregister_code(KC_QUOT);
+          if (lshift) register_code(KC_LSFT);
+        } else {
+          register_code(KC_SCLN);
+          unregister_code(KC_SCLN);
+        }
+      }
+      return false;
 
     default:
       if (record->event.pressed) {
