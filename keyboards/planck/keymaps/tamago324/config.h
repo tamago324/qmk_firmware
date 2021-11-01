@@ -18,7 +18,7 @@
    - MIDI notes can be sent when in Music mode is on
 */
 
-#define MIDI_BASIC
+// #define MIDI_BASIC
 
 /* enable advanced MIDI features:
    - MIDI notes can be added to the keymap
@@ -32,7 +32,7 @@
 //#define MIDI_TONE_KEYCODE_OCTAVES 2
 
 // Most tactile encoders have detents every 4 stages
-#define ENCODER_RESOLUTION 4
+// #define ENCODER_RESOLUTION 4
 
 //#define PERMISSIVE_HOLD
 //#define RETRO_TAPPING
@@ -59,3 +59,5 @@
 // // 数字は自動シフトしない
 // #define NO_AUTO_SHIFT_NUMERIC
 
+// すべてのアニメーションを有効化する
+#define RGBLIGHT_ANIMATIONS

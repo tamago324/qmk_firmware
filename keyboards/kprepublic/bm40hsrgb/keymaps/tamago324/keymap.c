@@ -35,38 +35,37 @@ enum custom_keycodes {
 };
 
 
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
-    [_QWERTY] = LAYOUT(
+    [_QWERTY] = LAYOUT_planck_mit(
       KC_TAB,        KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,        KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC, \
       KC_LCTRL,      KC_A,    KC_S,    KC_D,    KC_F,  KC_G,   KC_H,        KC_J,  KC_K,    KC_L,    JU_SCLN, KC_ENT, \
       KC_LSHIFT,     KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,   KC_N,        KC_M,  KC_COMM, KC_DOT,  KC_SLSH, XXXXXXX, \
-      MO(_SPECIAL), _______, KC_LGUI, KC_LALT, LOWER, SFT_T(KC_SPACE),     SFT_T(KC_SPACE),  RAISE, KC_RALT, _______, _______, _______ \
+      MO(_SPECIAL), _______, KC_LGUI, KC_LALT, LOWER, SFT_T(KC_SPACE),     RAISE, KC_RALT, _______, _______, _______ \
     ),
-    [_LOWER] = LAYOUT(
+    [_LOWER] = LAYOUT_planck_mit(
       KC_ESC,  KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  KC_PERC,       JP_CIRC, JP_AMPR, JP_ASTR, JP_LPRN, JP_RPRN, JP_TILD, \
       _______, C(KC_A), C(KC_S), C(KC_D), C(KC_F), C(KC_G),       JP_MINS, JP_EQL,  JP_LBRC, JP_RBRC, JP_COLN, JP_BSLS, \
       _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), C(KC_B),       JP_UNDS, JP_PLUS, JP_LCBR, JP_RCBR, S(KC_SLSH), JP_PIPE, \
-      _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ \
+      _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, KC_DEL \
     ),
-    [_RAISE] = LAYOUT(
+    [_RAISE] = LAYOUT_planck_mit(
       _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,          KC_6,     KC_7,     KC_8,     KC_9,    KC_0,    KC_DEL, \
-      _______, JU_QUOT, JU_QUOT, JU_QUOT, JU_QUOT, JP_GRV,        KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT, XXXXXXX,  XXXXXXX, \
+      _______, JU_QUOT, JU_QUOT, JU_QUOT, JU_QUOT, JP_GRV,        KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT, JP_COLN,  XXXXXXX, \
       _______, XXXXXXX, XXXXXXX, KC_COMM,  KC_DOT, XXXXXXX,       KC_HOME,  KC_PGUP,  KC_PGDN,  KC_END,  XXXXXXX, XXXXXXX, \
-      _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ \
+      _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______ \
     ),
-    [_ADJUST] = LAYOUT(
+    [_ADJUST] = LAYOUT_planck_mit(
       KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,         KC_F6,    KC_F7,    KC_F8,    KC_F9,   KC_F10,   KC_F12, \
       _______, JP_DQUO, JP_DQUO, JP_DQUO, JP_DQUO, JP_GRV,       C(KC_PGUP),  XXXXXXX,  XXXXXXX,  C(KC_PGDN), XXXXXXX,  XXXXXXX, \
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX, \
-      _______, _______,    _______,    _______,    _______,    _______,       _______, _______, _______, _______, _______, _______ \
+      _______, _______,    _______,    _______,    _______,          _______, _______, _______, _______, _______, _______ \
     ),
-    [_SPECIAL] = LAYOUT(
+    [_SPECIAL] = LAYOUT_planck_mit(
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
       RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
       RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RESET \
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RESET \
     )
 };
 
@@ -74,6 +73,7 @@ static bool lower_pressed = false;
 static bool raise_pressed = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
   // 日本語配列の制御のためのもの
   // https://scrapbox.io/self-made-kbds-ja/QMK_Firmware_%E3%81%A7_JP_%E9%85%8D%E5%88%97%E3%81%AE%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89%E3%82%92%E4%BD%9C%E3%82%8B
   // https://discord.com/channels/376937950409392130/448305600372408326/576610674617221120
