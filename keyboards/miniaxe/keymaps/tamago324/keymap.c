@@ -127,6 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 static bool lower_pressed = false;
 static bool raise_pressed = false;
+static bool zshift_pressed = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -232,11 +233,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
 
+    case LSFT_T(KC_Z):
+      if (record->event.pressed) {
+        zshift_pressed = true;
+
+        // LOWER でもRAISEでもない文字だった場合、戻しておく
+        lower_pressed = false;
+        raise_pressed = false;
+      } else {
+        zshift_pressed = false;
+      }
+      break;
+
+    case KC_E:
+      if (record->event.pressed) {
+          if (zshift_pressed) {
+            lower_pressed = false;
+            raise_pressed = false;
+            zshift_pressed = false;
+
+            // もし、Shift が押されていると認識したら、はなして Z を送信する (Z を2回送信しないようにするための処理)
+            lshift = keyboard_report->mods & MOD_BIT(KC_LSFT);
+            if (lshift) {
+              unregister_code(KC_LSFT);
+              tap_code(KC_Z);
+            }
+            tap_code(KC_E);
+            return false;
+          }
+      }
+      break;
+
     default:
       if (record->event.pressed) {
           // LOWER でもRAISEでもない文字だった場合、戻しておく
         lower_pressed = false;
         raise_pressed = false;
+        zshift_pressed = false;
       }
 
       break;
