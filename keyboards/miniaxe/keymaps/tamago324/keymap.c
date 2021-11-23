@@ -38,6 +38,7 @@ enum combo_events {
   CMB_ESCAPE,
   CMB_SEMICORON,
   CMB_CTRL_SPACE,
+  CMB_MINUS1,
   CMB_SLASH
 };
 
@@ -46,13 +47,15 @@ enum combo_events {
 const uint16_t PROGMEM comb_keys_Escape[] = {KC_D, KC_S, COMBO_END};
 const uint16_t PROGMEM comb_keys_semicoron[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM comb_keys_ctrl_space[] = {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM comb_keys_slash[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM comb_keys_dash[] = {KC_J, KC_K, COMBO_END};
+// const uint16_t PROGMEM comb_keys_slash[] = {KC_DOT, KC_COMMA, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [CMB_ESCAPE] = COMBO(comb_keys_Escape, KC_ESC),
   [CMB_SEMICORON] = COMBO(comb_keys_semicoron, JU_SCLN),
   [CMB_CTRL_SPACE] = COMBO(comb_keys_ctrl_space, C(KC_SPACE)),
-  [CMB_SLASH] = COMBO(comb_keys_slash, KC_SLSH),
+  [CMB_MINUS1] = COMBO(comb_keys_dash, JP_MINS),
+  // [CMB_SLASH] = COMBO(comb_keys_slash, KC_SLASH),
 };
 
 /* void process_combo_event(uint16_t combo_index, bool pressed) { */
@@ -107,14 +110,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [_LOWER] = LAYOUT_split_3x5_3( \
       KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  KC_PERC,              JP_CIRC, JP_AMPR, JP_ASTR, JP_LPRN, JP_RPRN, \
-      KC_LCTRL, XXXXXXX, S(KC_COMM), S(KC_DOT), JP_TILD,         JP_MINS, JP_EQL,  JP_LBRC, JP_RBRC, JP_COLN, \
-      SWIN(KC_S), XXXXXXX, XXXXXXX, JP_BSLS, JP_PIPE,              JP_UNDS, JP_PLUS, JP_LCBR, JP_RCBR, S(KC_SLSH),\
-                        _______, _______, _______,              KC_SLSH, _______, _______ \
+      KC_LCTRL, XXXXXXX, S(KC_COMM), S(KC_DOT), JP_TILD,         KC_SLSH, JP_EQL,  JP_LBRC, JP_RBRC, JP_COLN, \
+      SWIN(KC_S), XXXXXXX, JP_PIPE, JP_BSLS, XXXXXXX,              JP_UNDS, JP_PLUS, JP_LCBR, JP_RCBR, S(KC_SLSH),\
+                        _______, _______, _______,              _______, _______, _______ \
   ),
   [_RAISE] = LAYOUT_split_3x5_3( \
       KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                 KC_6,     KC_7,     KC_8,    KC_9,    KC_0,     \
       KC_LCTRL, JU_QUOT, JU_QUOT, JU_QUOT, JP_GRV,               KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, JP_COLN, \
-      _______, XXXXXXX, KC_SLSH, KC_SLSH, KC_SLSH,              KC_HOME,  KC_PGUP,  KC_PGDN, KC_END,  KC_SLSH,   \
+      _______, XXXXXXX, KC_SLSH, KC_SLSH, KC_SLSH,              KC_HOME,  KC_PGUP,  KC_PGDN, KC_END,  XXXXXXX,   \
                         _______, _______, _______,              _______, _______, _______  \
   ),
   [_ADJUST] =  LAYOUT_split_3x5_3( \
