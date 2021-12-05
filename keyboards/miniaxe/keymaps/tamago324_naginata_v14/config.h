@@ -16,7 +16,7 @@
 #define TAPPING_TERM_PER_KEY
 
 // コンボを使用する数を指定
-#define COMBO_COUNT 5
+#define COMBO_COUNT 8
 #define COMBO_TERM 35
 
 // // たたんって打たれたときに、ホールドとして認識させる？
@@ -25,4 +25,34 @@
 
 
 // どのレイヤでも、コンボはすべて _QWERTY のキーマップをチェックするようになる
-#define COMBO_ONLY_FROM_LAYER 0
+// #define COMBO_ONLY_FROM_LAYER 0
+
+// 薙刀式
+// #define NAGINATA_TATEGAKI
+#define NAGINATA_YOKOGAKI
+
+// #define NAGINATA_EDIT_WIN // JP106
+// #define UNICODE_SELECTED_MODES UC_WINC
+
+// #define NAGINATA_EDIT_MAC // US101
+// Macはunicode入力を使わない
+// #define MAC_LIVE_CONVERSION // Macでライブ変換をオンにしている場合
+
+#define NAGINATA_EDIT_LINUX
+#define UNICODE_SELECTED_MODES UC_LNX
+
+// #define NAGINATA_KOUCHI_SHIFT // シフトを後置でも有効にする
+// 薙刀式
+
+// // サイズを小さくする
+// #ifndef NO_DEBUG
+// #define NO_DEBUG
+// #endif // !NO_DEBUG
+// #if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
+// #define NO_PRINT
+// #endif // !NO_PRINT
+
+// #define NO_ACTION_MACRO
+// #define NO_ACTION_FUNCTION
+//
+// #define DISABLE_LEADER

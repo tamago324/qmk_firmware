@@ -15,10 +15,17 @@
  */
 #include QMK_KEYBOARD_H
 #include "keymap_jp.h"
+// 薙刀式
+#include "naginata.h"
+NGKEYS naginata_keys;
+// 薙刀式
 
 // Defines names for use in layer keycodes and the keymap
 enum layer_names {
   _QWERTY = 0,
+// 薙刀式
+  _NAGINATA, // 薙刀式入力レイヤー
+// 薙刀式
   _LOWER,
   _RAISE,
   _ADJUST
@@ -26,7 +33,9 @@ enum layer_names {
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
-  QWERTY = SAFE_RANGE,
+  EISU = NG_SAFE_RANGE,
+  KANA2,
+  QWERTY,
   LOWER,
   RAISE,
   ADJUST,
@@ -39,34 +48,39 @@ enum combo_events {
   CMB_SEMICORON,
   CMB_CTRL_SPACE,
   CMB_MINUS1,
-  CMB_SLASH
+  CMB_DEL,
+  CMB_ESCAPE2
 };
 
 // コンボ
-// DSでEscape
+// TODO: LOWER でも dash をできるようにする
 const uint16_t PROGMEM comb_keys_Escape[] = {KC_D, KC_S, COMBO_END};
+const uint16_t PROGMEM comb_keys_Escape2[] = {NG_S, NG_D, COMBO_END};
 const uint16_t PROGMEM comb_keys_semicoron[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM comb_keys_ctrl_space[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM comb_keys_dash[] = {KC_J, KC_K, COMBO_END};
-// const uint16_t PROGMEM comb_keys_slash[] = {KC_DOT, KC_COMMA, COMBO_END};
+const uint16_t PROGMEM comb_keys_delete[] = {KC_O, KC_BSPC, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-  [CMB_ESCAPE] = COMBO(comb_keys_Escape, KC_ESC),
+  [CMB_ESCAPE] = COMBO_ACTION(comb_keys_Escape),
+  [CMB_ESCAPE2] = COMBO_ACTION(comb_keys_Escape2),
   [CMB_SEMICORON] = COMBO(comb_keys_semicoron, JU_SCLN),
   [CMB_CTRL_SPACE] = COMBO(comb_keys_ctrl_space, C(KC_SPACE)),
   [CMB_MINUS1] = COMBO(comb_keys_dash, JP_MINS),
-  // [CMB_SLASH] = COMBO(comb_keys_slash, KC_SLASH),
+  [CMB_DEL] = COMBO(comb_keys_delete, KC_DELETE),
 };
 
-/* void process_combo_event(uint16_t combo_index, bool pressed) { */
-/*   switch(combo_index) { */
-/*     case CMB_CTRL_SPACE: */
-/*       if (pressed) { */
-/*         tap_code16(C(KC_SPACE)); */
-/*       } */
-/*       break; */
-/*   } */
-/* } */
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case CMB_ESCAPE:
+    case CMB_ESCAPE2:
+      if (pressed) {
+        tap_code16(KC_ESC);
+        naginata_off();
+      }
+      break;
+  }
+}
 
 /* // Alt-Q で alt-tab を送信する */
 /* const key_override_t alt_tab = ko_make_basic(MOD_MASK_ALT, KC_Q, LALT(KC_TAB)); */
@@ -76,29 +90,29 @@ combo_t key_combos[COMBO_COUNT] = {
 /*   NULL */
 /* }; */
 
-// Delete
-const key_override_t shift_bspc_delete = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DELETE);
-// <
-const key_override_t syounari = ko_make_basic(MOD_MASK_CTRL, KC_COMM, S(KC_COMM));
-// >
-const key_override_t dainari = ko_make_basic(MOD_MASK_CTRL, KC_DOT, S(KC_DOT));
+// // Delete
+// const key_override_t shift_bspc_delete = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DELETE);
+// // <
+// const key_override_t syounari = ko_make_basic(MOD_MASK_CTRL, KC_COMM, S(KC_COMM));
+// // >
+// const key_override_t dainari = ko_make_basic(MOD_MASK_CTRL, KC_DOT, S(KC_DOT));
+//
+// const key_override_t **key_overrides = (const key_override_t *[]) {
+//   &shift_bspc_delete,
+//   &syounari,
+//   &dainari,
+//   NULL
+// };
 
-const key_override_t **key_overrides = (const key_override_t *[]) {
-  &shift_bspc_delete,
-  &syounari,
-  &dainari,
-  NULL
-};
-
-// tap-dance
-enum {
-  TD_ALT_GUI,
-};
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-  // 1回のタップで ALT、2回のタップで GUI
-  [TD_ALT_GUI] = ACTION_TAP_DANCE_DOUBLE(KC_LALT, KC_LGUI)
-};
+// // tap-dance
+// enum {
+//   TD_ALT_GUI,
+// };
+//
+// qk_tap_dance_action_t tap_dance_actions[] = {
+//   // 1回のタップで ALT、2回のタップで GUI
+//   [TD_ALT_GUI] = ACTION_TAP_DANCE_DOUBLE(KC_LALT, KC_LGUI)
+// };
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -106,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_TAB,  KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y, KC_U,  KC_I,    KC_O,    KC_BSPC, \
          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H, KC_J,  KC_K,    KC_L,    KC_P, \
   LSFT_T(KC_Z),   KC_X,    KC_C,    KC_V,    KC_B,                          KC_N, KC_M,  KC_COMM, KC_DOT,  KC_Q, \
-                    TD(TD_ALT_GUI),  LOWER,  LCTL_T(KC_SPACE),     SFT_T(KC_ENT), RAISE, KC_LALT  \
+                    KC_LALT,  LOWER,  LCTL_T(KC_SPACE),     SFT_T(KC_ENT), RAISE, KC_LGUI  \
   ),
   [_LOWER] = LAYOUT_split_3x5_3( \
       KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  KC_PERC,              JP_CIRC, JP_AMPR, JP_ASTR, JP_LPRN, JP_RPRN, \
@@ -125,7 +139,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LCTRL, JP_DQUO,   JP_DQUO, JP_DQUO, JP_GRV,             C(KC_PGUP), XXXXXXX, XXXXXXX, C(KC_PGDN), KC_F12,\
       KC_F11, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,             XXXXXXX,  XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, \
                         _______, _______, _______,             _______, _______, RESET                           \
-  )
+  ),
+  // 薙刀式
+  [_NAGINATA] = LAYOUT_split_3x5_3(
+    NG_Q   ,NG_W   ,NG_E   ,NG_R   ,NG_T   ,                NG_Y   ,NG_U   ,NG_I   ,NG_O   ,NG_P   , \
+    NG_A   ,NG_S   ,NG_D   ,NG_F   ,NG_G   ,                NG_H   ,NG_J   ,NG_K   ,NG_L   ,NG_SCLN, \
+    NG_Z   ,NG_X   ,NG_C   ,NG_V   ,NG_B   ,                NG_N   ,NG_M   ,NG_COMM,NG_DOT ,NG_SLSH, \
+                   _______,_______, NG_SHFT,                NG_SHFT2,_______,_______
+  ),
+  // 薙刀式
 };
 
 static bool lower_pressed = false;
@@ -133,6 +155,10 @@ static bool raise_pressed = false;
 static bool zshift_pressed = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // 薙刀式
+    if (!process_naginata(keycode, record))
+      return false;
+  // 薙刀式
 
   // 日本語配列の制御のためのもの
   // https://scrapbox.io/self-made-kbds-ja/QMK_Firmware_%E3%81%A7_JP_%E9%85%8D%E5%88%97%E3%81%AE%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89%E3%82%92%E4%BD%9C%E3%82%8B
@@ -155,7 +181,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
 
         if (lower_pressed) {
-            tap_code(KC_MHEN);
+            // 薙刀式
+            naginata_off();
+            // 薙刀式
             lower_pressed = false;
         }
       }
@@ -173,9 +201,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
 
         if (raise_pressed) {
-            // https://docs.qmk.fm/#/ja/feature_macros?id=register_codeltkcgt
-            // キーダウンイベント
-            tap_code(KC_HENK);
+            // 薙刀式
+            naginata_on();
+            // 薙刀式
             raise_pressed = false;
         }
       }
@@ -188,6 +216,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_ADJUST);
       } else {
         layer_off(_ADJUST);
+      }
+      return false;
+      break;
+
+    case EISU:
+      if (record->event.pressed) {
+        // 薙刀式
+        naginata_off();
+        // 薙刀式
+      }
+      return false;
+      break;
+    case KANA2:
+      if (record->event.pressed) {
+        // 薙刀式
+        naginata_on();
+        // 薙刀式
       }
       return false;
       break;
@@ -284,9 +329,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // https://docs.qmk.fm/#/tap_hold?id=tapping-term
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case TD(TD_ALT_GUI):
-            return TAPPING_TERM + 500;
-            break;
+        // case TD(TD_ALT_GUI):
+        //     return TAPPING_TERM + 500;
+        //     break;
         /* case LCTL_T(KC_A): */
         /*     return TAPPING_TERM + 5; */
         /*     break; */
@@ -300,4 +345,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM;
             break;
     }
+}
+
+
+// 薙刀式をデフォルトとする
+void matrix_init_user(void) {
+  // 薙刀式
+  uint16_t ngonkeys[] = {KC_H, KC_J};
+  uint16_t ngoffkeys[] = {KC_F, KC_G};
+  set_naginata(_NAGINATA, ngonkeys, ngoffkeys);
+  // 薙刀式
 }

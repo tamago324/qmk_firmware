@@ -16,13 +16,15 @@
 #define TAPPING_TERM_PER_KEY
 
 // コンボを使用する数を指定
-#define COMBO_COUNT 5
+#define COMBO_COUNT 8
 #define COMBO_TERM 35
 
 // // たたんって打たれたときに、ホールドとして認識させる？
 // // これは、 LCTL_T(KC_A) と H 用 (C-H)
 // #define PERMISSIVE_HOLD
 
-
 // どのレイヤでも、コンボはすべて _QWERTY のキーマップをチェックするようになる
 #define COMBO_ONLY_FROM_LAYER 0
+
+// キーごとに設定する
+#define COMBO_TERM_PER_COMBO
