@@ -26,28 +26,28 @@ enum custom_keycodes {
   JU_QUOT
 };
 
-enum combos {
-    LOWER_H_MINUS
-};
-
-// LOWER H で誤爆するから、やだ
-const uint16_t lower_h_combo[] = {LOWER, KC_H};
-
-combo_t key_combos[COMBO_COUNT] = {
-    [LOWER_H_MINUS] = COMBO(lower_h_combo, JP_MINS)
-};
+/* enum combos { */
+/*     LOWER_H_MINUS */
+/* }; */
+/*  */
+/* // LOWER H で誤爆するから、やだ */
+/* const uint16_t lower_h_combo[] = {LOWER, KC_H}; */
+/*  */
+/* combo_t key_combos[COMBO_COUNT] = { */
+/*     [LOWER_H_MINUS] = COMBO(lower_h_combo, JP_MINS) */
+/* }; */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_QWERTY] = LAYOUT(
       KC_TAB,        KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,                                         KC_Y,  KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC, \
       KC_LCTRL,      KC_A,    KC_S,    KC_D,    KC_F,  KC_G,                                         KC_H,  KC_J,  KC_K,    KC_L,    JU_SCLN, KC_ENT, \
-      KC_LSHIFT,     KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,                                         KC_N,  KC_M,  KC_COMM, KC_DOT,  KC_SLSH, XXXXXXX, \
+      KC_LSHIFT,     KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,                                         KC_N,  KC_M,  KC_COMM, KC_DOT,  KC_SLSH, JP_MINS, \
       MO(_SPECIAL), KC_LGUI, KC_LALT, LOWER, SFT_T(KC_SPACE), KC_SPACE, KC_LSHIFT, KC_LSHIFT, RAISE, KC_RALT, XXXXXXX, XXXXXXX \
     ),
     [_LOWER] = LAYOUT(
       KC_ESC,  KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  KC_PERC,       JP_CIRC, JP_AMPR, JP_ASTR, JP_LPRN, JP_RPRN, JP_TILD, \
-      _______, C(KC_A), C(KC_S), C(KC_D), C(KC_F), C(KC_G),       JP_MINS, JP_EQL,  JP_LBRC, JP_RBRC, JP_COLN, JP_BSLS, \
+      _______, C(KC_A), C(KC_S), C(KC_D), C(KC_F), C(KC_G),       XXXXXXX, JP_EQL,  JP_LBRC, JP_RBRC, JP_COLN, JP_BSLS, \
       _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), C(KC_B),       JP_UNDS, JP_PLUS, JP_LCBR, JP_RCBR, S(KC_SLSH), JP_PIPE, \
       _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______ \
     ),
@@ -196,7 +196,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
         case SFT_T(KC_SPACE):
-            return TAPPING_TERM + 10;
+            return TAPPING_TERM + 15;
         default:
             return TAPPING_TERM;
     }

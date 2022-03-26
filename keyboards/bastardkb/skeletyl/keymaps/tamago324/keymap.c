@@ -24,7 +24,8 @@ enum layer_names {
   _LOWER,
   _RAISE,
   _ADJUST,
-  // _OPENING_BRACKET,
+  _SPECIAL,
+  _WIN,
   // _CLOSING_BRACKET,
 };
 
@@ -41,54 +42,68 @@ enum custom_keycodes {
 };
 
 enum combo_events {
-  CMB_ESCAPE,
-  CMB_SEMICORON,
-  CMB_CTRL_SPACE,
+  // CMB_ESCAPE,
+  // CMB_SEMICORON,
+  /* CMB_CTRL_SPACE, */
   // CMB_MINUS1,
   // CMB_MINUS2,
   // CMB_OPENING_BRACKET_LAYER,
-  // CMB_CLOSING_BRACKET_LAYER,
-  CMB_BACKSPACE,
-  CMB_WIN_ENTER,
-  CMB_WIN,
+  // CMB_SPECIAL_LAYER,
+  // CMB_BACKSPACE,
+  // CMB_WIN_ENTER,
+  CMB_EQ_LEFT_ARROW,
+  CMB_EQ_LEFT_ARROW2,
+  CMB_MINUS_LEFT_ARROW
 };
 
 // コンボ
-const uint16_t PROGMEM comb_keys_Escape[] = {KC_D, KC_S, COMBO_END};
-const uint16_t PROGMEM comb_keys_semicoron[] = {KC_K, KC_L, COMBO_END};
-const uint16_t PROGMEM comb_keys_ctrl_space[] = {KC_X, KC_C, COMBO_END};
+// const uint16_t PROGMEM comb_keys_Escape[] = {KC_D, KC_S, COMBO_END};
+// const uint16_t PROGMEM comb_keys_semicoron[] = {KC_K, KC_L, COMBO_END};
+// const uint16_t PROGMEM comb_keys_ctrl_space[] = {KC_X, KC_C, COMBO_END};
 // const uint16_t PROGMEM comb_keys_dash[] = {KC_J, KC_K, COMBO_END};
 // const uint16_t PROGMEM comb_keys_dash2[] = {JP_EQL, JP_LBRC, COMBO_END};
-const uint16_t PROGMEM comb_keys_opening_bracket_layer[] = {KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM comb_keys_closing_bracket_layer[] = {KC_C, KC_V, COMBO_END};
+// const uint16_t PROGMEM comb_keys_opening_bracket_layer[] = {KC_D, KC_F, COMBO_END};
+// const uint16_t PROGMEM comb_keys_special_layer[] = {KC_C, KC_V, COMBO_END};
 // const uint16_t PROGMEM comb_keys_back_space[] = {KC_COMM, KC_DOT, COMBO_END};
-// Lower の SD
-const uint16_t PROGMEM comb_keys_win_enter[] = {JP_PIPE, S(KC_COMM), COMBO_END};
-const uint16_t PROGMEM comb_keys_win[] = {JP_AT, KC_HASH, COMBO_END};
+// const uint16_t PROGMEM comb_keys_one_shoft_win[] = {JP_PIPE, KC_BSPC, COMBO_END};
+
+// =>
+const uint16_t PROGMEM comb_keys_eq_left_arrow[] = {JP_EQL, JP_LBRC, COMBO_END};
+// ->
+const uint16_t PROGMEM comb_keys_minus_left_arrow[] = {JP_MINS, JP_LPRN, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-  [CMB_ESCAPE] = COMBO(comb_keys_Escape, KC_ESC),
-  [CMB_SEMICORON] = COMBO(comb_keys_semicoron, JU_SCLN),
-  [CMB_CTRL_SPACE] = COMBO(comb_keys_ctrl_space, C(KC_SPACE)),
+  // [CMB_ESCAPE] = COMBO(comb_keys_Escape, KC_ESC),
+  // [CMB_SEMICORON] = COMBO(comb_keys_semicoron, JU_SCLN),
+  // [CMB_CTRL_SPACE] = COMBO(comb_keys_ctrl_space, C(KC_SPACE)),
   // [CMB_MINUS1] = COMBO(comb_keys_dash, JP_MINS),
   // [CMB_MINUS2] = COMBO(comb_keys_dash2, JP_MINS),
-  // [CMB_OPENING_BRACKET_LAYER] = COMBO(comb_keys_opening_bracket_layer, MO(_OPENING_BRACKET)),
+  // [CMB_SPECIAL_LAYER] = COMBO(comb_keys_special_layer, MO(_SPECIAL)),
   // [CMB_CLOSING_BRACKET_LAYER] = COMBO(comb_keys_closing_bracket_layer, MO(_CLOSING_BRACKET)),
   // [CMB_BACKSPACE] = COMBO(comb_keys_back_space, KC_BSPC),
-  [CMB_WIN_ENTER] = COMBO(comb_keys_win_enter, LWIN(KC_ENT)),
-  [CMB_WIN] = COMBO(comb_keys_win, KC_LGUI),
+  // [CMB_WIN_ENTER] = COMBO(comb_keys_win_enter, LWIN(KC_ENT)),
+  // [CMB_ONESHOT_LAYER_WIN] = COMBO(comb_keys_one_shoft_win, OSL(_WIN)),
+  [CMB_EQ_LEFT_ARROW] = COMBO_ACTION(comb_keys_eq_left_arrow),
+  [CMB_MINUS_LEFT_ARROW] = COMBO_ACTION(comb_keys_minus_left_arrow),
 };
 
 
-/* void process_combo_event(uint16_t combo_index, bool pressed) { */
-/*   switch(combo_index) { */
-/*     case CMB_CTRL_SPACE: */
-/*       if (pressed) { */
-/*         tap_code16(C(KC_SPACE)); */
-/*       } */
-/*       break; */
-/*   } */
-/* } */
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case CMB_EQ_LEFT_ARROW:
+      if (pressed) {
+        tap_code16(JP_EQL);
+        tap_code16(S(KC_DOT));
+      }
+      break;
+    case CMB_MINUS_LEFT_ARROW:
+      if (pressed) {
+        tap_code16(JP_MINS);
+        tap_code16(S(KC_DOT));
+      }
+      break;
+  }
+}
 
 /* // Alt-Q で alt-tab を送信する */
 /* const key_override_t alt_tab = ko_make_basic(MOD_MASK_ALT, KC_Q, LALT(KC_TAB)); */
@@ -98,8 +113,8 @@ combo_t key_combos[COMBO_COUNT] = {
 /*   NULL */
 /* }; */
 
-// Delete
-const key_override_t shift_bspc_delete = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DELETE);
+// // Delete
+// const key_override_t shift_bspc_delete = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DELETE);
 // <
 const key_override_t syounari = ko_make_basic(MOD_MASK_CTRL, KC_COMM, S(KC_COMM));
 // >
@@ -112,7 +127,7 @@ const key_override_t dainari = ko_make_basic(MOD_MASK_CTRL, KC_DOT, S(KC_DOT));
 // const key_override_t alt_tab = ko_make_basic(MOD_MASK_ALT, KC_G, LALT(KC_TAB));
 
 const key_override_t **key_overrides = (const key_override_t *[]) {
-  &shift_bspc_delete,
+  // &shift_bspc_delete,
   &syounari,
   &dainari,
   // &alt_shift_tab,
@@ -121,41 +136,53 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
   NULL
 };
 
-// tap-dance
-enum {
-  TD_ALT_GUI,
-};
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-  // 1回のタップで ALT、2回のタップで GUI
-  [TD_ALT_GUI] = ACTION_TAP_DANCE_DOUBLE(KC_LALT, KC_LGUI),
-};
+// // tap-dance
+// enum {
+//   TD_ALT_GUI,
+// };
+// 
+// qk_tap_dance_action_t tap_dance_actions[] = {
+//   // 1回のタップで ALT、2回のタップで GUI
+//   [TD_ALT_GUI] = ACTION_TAP_DANCE_DOUBLE(KC_LALT, KC_LGUI),
+// };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3( \
          KC_TAB,  KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y, KC_U,  KC_I,    KC_O,    KC_BSPC, \
          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H, KC_J,  KC_K,    KC_L,    KC_P, \
   LSFT_T(KC_Z),   KC_X,    KC_C,    ALT_T(KC_V),    KC_B,                   KC_N, KC_M,  KC_COMM, KC_DOT,  ALT_T(KC_Q), \
-                    LOWER,  LCTL_T(KC_SPACE), XXXXXXX,                XXXXXXX,  SFT_T(KC_ENT), RAISE \
+                    LOWER,  LCTL_T(KC_SPACE), KC_LGUI,                MO(_SPECIAL),  SFT_T(KC_ENT), RAISE \
   ),
   [_LOWER] = LAYOUT_split_3x5_3( \
-      KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  KC_PERC,              JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, JP_CIRC,  \
-      KC_LCTRL, JP_PIPE, S(KC_COMM), S(KC_DOT), JP_TILD,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, JP_COLN, \
-      C(KC_Z), SWIN(KC_S), ALT_SHIFT_TAB, ALT_TAB, KC_ENT,          JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, S(KC_SLSH),\
-                        _______, _______, _______,              _______, LALT(KC_ENT), _______ \
+      KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  XXXXXXX,            JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, JP_CIRC,  \
+      KC_LCTRL, KC_ESC, KC_BSPC, XXXXXXX, KC_DELETE,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, JP_COLN, \
+      C(KC_Z), OSL(_WIN), ALT_SHIFT_TAB, ALT_TAB, KC_ENT,     JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, S(KC_SLSH),\
+                        _______, _______, _______,            OSM(MOD_LSFT | MOD_LCTL), LALT(KC_ENT), _______ \
   ),
   [_RAISE] = LAYOUT_split_3x5_3( \
-      XXXXXXX,  KC_4, KC_5, KC_6, XXXXXXX,               XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, XXXXXXX,     \
-      XXXXXXX, KC_1, KC_2, KC_3, JP_BSLS,              KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, XXXXXXX, \
-      KC_LSFT,  KC_7, KC_8, KC_9, XXXXXXX,             KC_HOME,  KC_PGUP,  KC_PGDN, KC_END,  KC_DELETE,   \
-                        _______, CTL_T(KC_0), _______,              _______, _______, _______  \
+      XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,             XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, KC_DELETE,     \
+      XXXXXXX, KC_1, KC_2, KC_3, XXXXXXX,             KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, JU_SCLN, \
+      KC_LSFT, KC_7, KC_8, KC_9, KC_LSFT,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  XXXXXXX,   \
+                        _______, CTL_T(KC_0), OSM(MOD_LSFT | MOD_LCTL),              _______, _______, _______  \
   ),
   [_ADJUST] =  LAYOUT_split_3x5_3( \
-      KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,               KC_F6,    KC_F7,    KC_F8,   KC_F9,   KC_F10,    \
-      KC_LCTRL, JP_DQUO, JP_DQUO, JP_DQUO, XXXXXXX,             C(KC_PGUP), XXXXXXX, XXXXXXX, C(KC_PGDN), KC_F12,\
-      KC_F11, XXXXXXX, JP_GRV, JP_GRV, XXXXXXX,             XXXXXXX,  JP_PLUS,  XXXXXXX, XXXXXXX, XXXXXXX, \
+      XXXXXXX, KC_F2, KC_PERC, XXXXXXX, XXXXXXX,     XXXXXXX, KC_F7, JP_DQUO, JP_DQUO, KC_F10, \
+      XXXXXXX, JP_TILD, JP_PIPE, JP_BSLS, XXXXXXX,    C(KC_PGUP), XXXXXXX, XXXXXXX, C(KC_PGDN), XXXXXXX,\
+      XXXXXXX, C(KC_SPACE), JP_GRV, JP_GRV,  XXXXXXX,     XXXXXXX, JP_PLUS,  XXXXXXX, XXXXXXX, XXXXXXX, \
                         _______, _______, _______,             _______, _______, XXXXXXX                           \
   ),
+  [_SPECIAL] = LAYOUT_split_3x5_3(
+    XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F11,              RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, \
+    XXXXXXX, KC_F7, KC_F8, KC_F9, XXXXXXX,             RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RESET,   \
+                      XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX                 \
+  ),
+  [_WIN] = LAYOUT_split_3x5_3(
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+    XXXXXXX, KC_LGUI, G(KC_D), KC_F12, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, G(KC_L), XXXXXXX, \
+    XXXXXXX, SWIN(KC_S), XXXXXXX, G(KC_V), XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+                      XXXXXXX, OS_OFF, XXXXXXX,        XXXXXXX, G(KC_ENT), XXXXXXX                 \
+  )
 };
 
 static bool lower_pressed = false;
@@ -163,6 +190,10 @@ static bool raise_pressed = false;
 static bool zshift_pressed = false;
 static bool alt_tab_pressed = false;
 static bool alt_shift_tab_pressed = false;
+
+// lower を長押ししたら単推しとしてみなさないようにするためのタイマー
+static uint16_t lower_pressed_time = 0;
+static uint16_t raise_pressed_time = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -179,6 +210,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LOWER:
       if (record->event.pressed) {
         lower_pressed = true;
+        // LOWER を押した時間を保持しておく
+        lower_pressed_time = record->event.time;
 
         layer_on(_LOWER);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
@@ -195,10 +228,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           return false;
         }
 
-        if (lower_pressed) {
+        if (lower_pressed && TIMER_DIFF_16(record->event.time, lower_pressed_time) < TAPPING_TERM) {
+          // もし、長押しをしていなければ、無変換を送信する
             tap_code(KC_MHEN);
-            lower_pressed = false;
         }
+        lower_pressed = false;
       }
       return false;
       break;
@@ -206,6 +240,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RAISE:
       if (record->event.pressed) {
         raise_pressed = true;
+        raise_pressed_time = record->event.time;
 
         layer_on(_RAISE);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
@@ -213,7 +248,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_RAISE);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
 
-        if (raise_pressed) {
+        if (raise_pressed && TIMER_DIFF_16(record->event.time, raise_pressed_time) < TAPPING_TERM) {
             // https://docs.qmk.fm/#/ja/feature_macros?id=register_codeltkcgt
             // キーダウンイベント
             tap_code(KC_HENK);
@@ -377,9 +412,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // https://docs.qmk.fm/#/tap_hold?id=tapping-term
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case TD(TD_ALT_GUI):
-            return TAPPING_TERM + 500;
-            break;
+        // case TD(TD_ALT_GUI):
+        //     return TAPPING_TERM + 500;
+        //     break;
         /* case LCTL_T(KC_A): */
         /*     return TAPPING_TERM + 5; */
         /*     break; */
@@ -387,42 +422,42 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM + 30;
             break;
         case SFT_T(KC_ENT):
-            return TAPPING_TERM - 20;
+            return TAPPING_TERM - 50;
             break;
         case ALT_T(KC_V):
             return TAPPING_TERM + 30;
             break;
-        // case LCTL_T(KC_SPACE):
-        //     return TAPPING_TERM + 20;
-        //     break;
+        case LCTL_T(KC_SPACE):
+            return TAPPING_TERM - 20;
+            break;
         default:
             return TAPPING_TERM;
             break;
     }
 }
 
-uint16_t get_combo_term(uint16_t index, combo_t *combo) {
-    // switch (combo->keycode) {
-    //     case KC_F:
-    //         return COMBO_TERM + 50;
-    // }
-
-    // or with combo index, i.e. its name from enum.
-    switch (index) {
-        // case CMB_MINUS1:
-        // case CMB_MINUS2:
-        //     return COMBO_TERM + 30;
-        case CMB_ESCAPE:
-            return COMBO_TERM + 30;
-    }
-
-    // // And if you're feeling adventurous, you can even decide by the keys in the chord,
-    // // i.e. the exact array of keys you defined for the combo.
-    // // This can be useful if your combos have a common key and you want to apply the
-    // // same combo term for all of them.
-    // if (combo->keys[0] == KC_ENTER) { // if first key in the array is KC_ENTER
-    //     return 150;
-    // }
-
-    return COMBO_TERM;
-}
+// uint16_t get_combo_term(uint16_t index, combo_t *combo) {
+//     // switch (combo->keycode) {
+//     //     case KC_F:
+//     //         return COMBO_TERM + 50;
+//     // }
+// 
+//     // or with combo index, i.e. its name from enum.
+//     switch (index) {
+//         // case CMB_MINUS1:
+//         // case CMB_MINUS2:
+//         //     return COMBO_TERM + 30;
+//         // case CMB_ESCAPE:
+//         //     return COMBO_TERM + 30;
+//     }
+// 
+//     // // And if you're feeling adventurous, you can even decide by the keys in the chord,
+//     // // i.e. the exact array of keys you defined for the combo.
+//     // // This can be useful if your combos have a common key and you want to apply the
+//     // // same combo term for all of them.
+//     // if (combo->keys[0] == KC_ENTER) { // if first key in the array is KC_ENTER
+//     //     return 150;
+//     // }
+// 
+//     return COMBO_TERM;
+// }
