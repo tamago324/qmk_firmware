@@ -1,4 +1,3 @@
-# SRC += jtu_custom_keycodes.c
 COMBO_ENABLE = yes
 
 KEY_OVERRIDE_ENABLE = yes
@@ -15,3 +14,6 @@ SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE = no
 MAGIC_ENABLE = no
 MUSIC_ENABLE = no
+
+# LED 
+RGBLIGHT_ENABLE = yes

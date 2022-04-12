@@ -44,17 +44,21 @@ enum custom_keycodes {
 enum combo_events {
   CMB_EQ_LEFT_ARROW,
   CMB_EQ_LEFT_ARROW2,
-  CMB_MINUS_LEFT_ARROW
+  CMB_MINUS_LEFT_ARROW,
+  CMB_MINUS_MINUS
 };
 
 // =>
 const uint16_t PROGMEM comb_keys_eq_left_arrow[] = {JP_EQL, JP_LBRC, COMBO_END};
 // ->
 const uint16_t PROGMEM comb_keys_minus_left_arrow[] = {JP_MINS, JP_LPRN, COMBO_END};
+// --
+const uint16_t PROGMEM comb_keys_minus_minus[] = {JP_MINS, JP_LBRC, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [CMB_EQ_LEFT_ARROW] = COMBO_ACTION(comb_keys_eq_left_arrow),
   [CMB_MINUS_LEFT_ARROW] = COMBO_ACTION(comb_keys_minus_left_arrow),
+  [CMB_MINUS_MINUS] = COMBO_ACTION(comb_keys_minus_minus),
 };
 
 
@@ -70,6 +74,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       if (pressed) {
         tap_code16(JP_MINS);
         tap_code16(S(KC_DOT));
+      }
+      break;
+    case CMB_MINUS_MINUS:
+      if (pressed) {
+        tap_code16(JP_MINS);
+        tap_code16(JP_MINS);
       }
       break;
   }
@@ -96,42 +106,45 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 //   [TD_ALT_GUI] = ACTION_TAP_DANCE_DOUBLE(KC_LALT, KC_LGUI),
 // };
 
+
+// LCTL_T(KC_A) は Lower レイヤーのためのもの
+// Lower の Ctrl をおそうとして、a が入力されるのを防ぐため
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_QWERTY] = LAYOUT_reviung34( \
-         KC_TAB,  KC_W,    KC_E, KC_R,        KC_T,    KC_Y, KC_U,  KC_I,    KC_O,    LT(_SPECIAL, KC_BSPC), \
-         KC_A,    KC_S,    KC_D, KC_F,        KC_G,    KC_H, KC_J,  KC_K,    KC_L,    KC_P, \
-  LSFT_T(KC_Z),   KC_X,    KC_C, ALT_T(KC_V), KC_B,    KC_N, KC_M,  KC_COMM, KC_DOT,  ALT_T(KC_Q), \
-                    LOWER,  LCTL_T(KC_SPACE),          SFT_T(KC_ENT), RAISE \
+  [_QWERTY] = LAYOUT_reviung34(
+         KC_TAB,  KC_W,    KC_E, KC_R,        KC_T,    KC_Y, KC_U,  KC_I,    KC_O,    LT(_SPECIAL, KC_BSPC),
+  LCTL_T(KC_A),    KC_S,    KC_D, KC_F,        KC_G,    KC_H, KC_J,  KC_K,    KC_L,    KC_P,
+  LSFT_T(KC_Z),   LGUI_T(KC_X),    KC_C, ALT_T(KC_V), KC_B,    KC_N, KC_M,  KC_COMM, KC_DOT,  ALT_T(KC_Q),
+                    LOWER,  LCTL_T(KC_SPACE),          SFT_T(KC_ENT), RAISE
   ),
-  [_LOWER] = LAYOUT_reviung34( \
-      KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  XXXXXXX,          JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, JP_CIRC,  \
-      KC_LCTRL, KC_ESC, KC_BSPC, KC_ENT, KC_DELETE,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, JP_COLN, \
-      C(KC_Z), OSL(_WIN), ALT_SHIFT_TAB, ALT_TAB, XXXXXXX,   JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, S(KC_SLSH),\
-                        _______, _______,                   LALT(KC_ENT), _______ \
+  [_LOWER] = LAYOUT_reviung34(
+      KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  XXXXXXX,          JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, JP_CIRC,
+      KC_LCTRL, KC_ESC, KC_BSPC, KC_ENT, KC_DELETE,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, JP_COLN,
+      C(KC_Z), OSL(_WIN), ALT_SHIFT_TAB, ALT_TAB, XXXXXXX,   JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, S(KC_SLSH),
+                        _______, _______,                   SFT_T(LALT(KC_ENT)), _______
   ),
-  [_RAISE] = LAYOUT_reviung34( \
-      XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,             XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, KC_DELETE,     \
-      XXXXXXX, KC_1, KC_2, KC_3, XXXXXXX,             KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, JU_SCLN, \
-      KC_LSFT, KC_7, KC_8, KC_9, KC_LSFT,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  XXXXXXX,   \
-                        _______, CTL_T(KC_0),            _______, _______  \
+  [_RAISE] = LAYOUT_reviung34(
+      XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,             XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, KC_DELETE,
+      KC_LSFT, KC_1, KC_2, KC_3, XXXXXXX,             KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, JU_SCLN,
+      KC_LSFT, KC_7, KC_8, KC_9, KC_LSFT,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  XXXXXXX,
+                        _______, CTL_T(KC_0),            _______, _______ 
   ),
-  [_ADJUST] =  LAYOUT_reviung34( \
-      XXXXXXX, KC_F2, KC_PERC, XXXXXXX, XXXXXXX,     XXXXXXX, KC_F7, JP_DQUO, JP_DQUO, KC_F10, \
-      XXXXXXX, JP_TILD, JP_PIPE, JP_BSLS, XXXXXXX,    C(KC_PGUP), XXXXXXX, XXXXXXX, C(KC_PGDN), XXXXXXX,\
-      XXXXXXX, C(KC_SPACE), JP_GRV, JP_GRV,  XXXXXXX,     XXXXXXX, JP_PLUS,  XXXXXXX, XXXXXXX, XXXXXXX, \
-                        _______, _______,             _______, XXXXXXX                           \
+  [_ADJUST] =  LAYOUT_reviung34(
+      XXXXXXX, KC_F2, KC_PERC, XXXXXXX, XXXXXXX,     XXXXXXX, KC_F7, JP_DQUO, JP_DQUO, KC_F10,
+      KC_LCTRL, JP_TILD, JP_PIPE, JP_BSLS, XXXXXXX,    C(KC_PGUP), XXXXXXX, XXXXXXX, C(KC_PGDN), XXXXXXX,
+      XXXXXXX, C(KC_SPACE), JP_GRV, JP_GRV,  XXXXXXX,     XXXXXXX, JP_PLUS,  XXXXXXX, XXXXXXX, XXXXXXX,
+                        _______, _______,             _______, XXXXXXX                          
   ),
   [_SPECIAL] = LAYOUT_reviung34(
-    XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             RGB_VAI, RGB_SAI, RGB_HUI, RGB_MOD, XXXXXXX, \
-    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F11,              RGB_VAD, RGB_SAD, RGB_HUD, RGB_RMOD,XXXXXXX, \
-    XXXXXXX, KC_F7, KC_F8, KC_F9, XXXXXXX,             RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, RESET, \
-                      XXXXXXX, XXXXXXX,                 XXXXXXX, XXXXXXX                          \
+    XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             RGB_VAI, RGB_SAI, RGB_HUI, RGB_MOD, XXXXXXX,
+    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F11,              RGB_VAD, RGB_SAD, RGB_HUD, RGB_RMOD,XXXXXXX,
+    XXXXXXX, KC_F7, KC_F8, KC_F9, XXXXXXX,             RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, RESET,
+                      XXXXXXX, XXXXXXX,                 XXXXXXX, XXXXXXX                         
   ),
   [_WIN] = LAYOUT_reviung34(
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-    XXXXXXX, KC_LGUI, G(KC_D), KC_F12, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, G(KC_L), XXXXXXX, \
-    XXXXXXX, SWIN(KC_S), XXXXXXX, G(KC_V), XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-                      XXXXXXX, OS_OFF,                 XXXXXXX, G(KC_ENT)                          \
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_LGUI, G(KC_D), KC_F12, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, G(KC_L), XXXXXXX,
+    XXXXXXX, SWIN(KC_S), XXXXXXX, G(KC_V), XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                      XXXXXXX, OS_OFF,                 G(KC_ENT), XXXXXXX                         
   )
 };
 
@@ -371,14 +384,17 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_Z):
             return TAPPING_TERM + 30;
             break;
-        case SFT_T(KC_ENT):
-            return TAPPING_TERM;
-            break;
+        // case SFT_T(KC_ENT):
+        //     return TAPPING_TERM;
+        //     break;
         case ALT_T(KC_V):
             return TAPPING_TERM + 30;
             break;
         case LCTL_T(KC_SPACE):
-            return TAPPING_TERM - 20;
+            return TAPPING_TERM + 20;
+            break;
+        case LCTL_T(KC_A):
+            return TAPPING_TERM + 50;
             break;
         default:
             return TAPPING_TERM;
