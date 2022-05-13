@@ -178,6 +178,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_LOWER);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
 
+        if (lower_pressed && TIMER_DIFF_16(record->event.time, lower_pressed_time) < TAPPING_TERM) {
+          // もし、長押しをしていなければ、無変換を送信する
+            tap_code(KC_MHEN);
+        }
+        lower_pressed = false;
+
       }
       return false;
       break;
@@ -189,12 +195,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         layer_on(_RAISE);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-
-        if (lower_pressed && TIMER_DIFF_16(record->event.time, lower_pressed_time) < TAPPING_TERM) {
-          // もし、長押しをしていなければ、無変換を送信する
-            tap_code(KC_MHEN);
-        }
-        lower_pressed = false;
 
       } else {
         layer_off(_RAISE);
