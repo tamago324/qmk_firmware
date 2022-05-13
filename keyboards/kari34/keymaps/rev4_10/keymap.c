@@ -101,37 +101,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_TAB,  KC_W,    KC_E, KC_R,        KC_T,    KC_Y, KC_U,  KC_I,    KC_O,    LT(_SPECIAL, KC_BSPC),
   LCTL_T(KC_A),    KC_S,    KC_D, KC_F,        KC_G,    KC_H, KC_J,  KC_K,    KC_L,    KC_P,
   LSFT_T(KC_Z),   LGUI_T(KC_X),    KC_C, ALT_T(KC_V), KC_B,    KC_N, KC_M,  KC_COMM, KC_DOT,  ALT_T(KC_Q),
-                    LOWER,  LCTL_T(KC_SPACE),          SFT_T(KC_ENT), RAISE
+                   XXXXXXX ,LOWER,  LCTL_T(KC_SPACE),          SFT_T(KC_ENT), RAISE, XXXXXXX
   ),
   [_LOWER] = LAYOUT(
       KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  XXXXXXX,          JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, JP_CIRC,
       KC_LCTRL, KC_ESC, KC_BSPC, KC_ENT, KC_DELETE,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, JP_COLN,
       C(KC_Z), OSL(_WIN), ALT_SHIFT_TAB, ALT_TAB, XXXXXXX,   JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, S(KC_SLSH),
-                        _______, _______,                   SFT_T(LALT(KC_ENT)), _______
+                       XXXXXXX , _______, _______,                   SFT_T(LALT(KC_ENT)), _______, XXXXXXX
   ),
   [_RAISE] = LAYOUT(
       XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,             XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, KC_DELETE,
       KC_LSFT, KC_1, KC_2, KC_3, XXXXXXX,             KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, JU_SCLN,
       KC_LSFT, KC_7, KC_8, KC_9, KC_LSFT,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  XXXXXXX,
-                        _______, CTL_T(KC_0),            _______, _______ 
+                        XXXXXXX ,_______, CTL_T(KC_0),            _______, _______ , XXXXXXX
   ),
   [_ADJUST] =  LAYOUT(
       XXXXXXX, KC_F2, KC_PERC, XXXXXXX, XXXXXXX,     XXXXXXX, KC_F7, JP_DQUO, JP_DQUO, KC_F10,
       KC_LCTRL, JP_TILD, JP_PIPE, JP_BSLS, XXXXXXX,    C(KC_PGUP), C(KC_DOWN), C(KC_UP), C(KC_PGDN), XXXXXXX,
       XXXXXXX, C(KC_SPACE), XXXXXXX, JP_GRV,  XXXXXXX,     XXXXXXX, JP_PLUS,  XXXXXXX, XXXXXXX, XXXXXXX,
-                        _______, _______,             _______, XXXXXXX                          
+                        XXXXXXX ,_______, _______,             _______, XXXXXXX, XXXXXXX
   ),
   [_SPECIAL] = LAYOUT(
     XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F11,              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX,
     XXXXXXX, KC_F7, KC_F8, KC_F9, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RESET,
-                      XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX                         
+                      XXXXXXX ,XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX
   ),
   [_WIN] = LAYOUT(
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, KC_LGUI, G(KC_D), KC_F12, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, G(KC_L), XXXXXXX,
     XXXXXXX, SWIN(KC_S), XXXXXXX, G(KC_V), XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                      XXXXXXX, OS_OFF,                 G(KC_ENT), XXXXXXX                         
+                      XXXXXXX ,XXXXXXX, OS_OFF,                 G(KC_ENT), XXXXXXX, XXXXXXX
   )
 };
 

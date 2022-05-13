@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_RAISE] = LAYOUT_reviung34(
       XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,             XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, KC_DELETE,
       KC_LSFT, KC_1, KC_2, KC_3, XXXXXXX,             KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, JU_SCLN,
-      KC_LSFT, KC_7, KC_8, KC_9, KC_LSFT,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  XXXXXXX,
+      KC_LSFT, KC_7, KC_8, KC_9, XXXXXXX,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  XXXXXXX,
                         _______, CTL_T(KC_0),            _______, _______ 
   ),
   [_ADJUST] =  LAYOUT_reviung34(
@@ -373,6 +373,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 // https://docs.qmk.fm/#/tap_hold?id=tapping-term
+// 長押しと判定されるまでの時間を調整する
+// すぐに長押し判定してほしいときは数値を下げる (TAPPING_TERM - 20 みたいな感じ)
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // case TD(TD_ALT_GUI):
@@ -384,9 +386,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_Z):
             return TAPPING_TERM + 30;
             break;
-        // case SFT_T(KC_ENT):
-        //     return TAPPING_TERM;
-        //     break;
+        case SFT_T(KC_ENT):
+            return TAPPING_TERM - 5;
+            break;
         case ALT_T(KC_V):
             return TAPPING_TERM + 30;
             break;
