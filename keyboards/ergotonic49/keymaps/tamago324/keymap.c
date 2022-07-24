@@ -1,4 +1,4 @@
-/* Copyright 2022 tamago324
+/* Copyright 2021 hanachi-ap
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,8 @@ enum layer_names {
   _RAISE,
   _ADJUST,
   _SPECIAL,
-  _WIN
+  _WIN,
+  // _CLOSING_BRACKET,
 };
 
 // Defines the keycodes used by our macros in process_record_user
@@ -36,7 +37,6 @@ enum custom_keycodes {
   JU_QUOT,
   ALT_TAB,
   ALT_SHIFT_TAB
-
 };
 
 enum combo_events {
@@ -45,7 +45,6 @@ enum combo_events {
   CMB_MINUS_LEFT_ARROW,
   CMB_MINUS_MINUS
 };
-
 
 // =>
 const uint16_t PROGMEM comb_keys_eq_left_arrow[] = {JP_EQL, JP_LBRC, COMBO_END};
@@ -59,6 +58,7 @@ combo_t key_combos[COMBO_COUNT] = {
   [CMB_MINUS_LEFT_ARROW] = COMBO_ACTION(comb_keys_minus_left_arrow),
   [CMB_MINUS_MINUS] = COMBO_ACTION(comb_keys_minus_minus),
 };
+
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
@@ -94,46 +94,54 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
   NULL
 };
 
-// LCTL_T(KC_A) は Lower レイヤーのためのもの
-// Lower の Ctrl をおそうとして、a が入力されるのを防ぐため
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT(
-         KC_TAB,  KC_W,    KC_E, KC_R,        KC_T,    KC_Y, KC_U,  KC_I,    KC_O,    KC_BSPC,
-  LCTL_T(KC_A),    KC_S,    KC_D, KC_F,        KC_G,    KC_H, KC_J,  KC_K,    KC_L,    KC_P,
-  LSFT_T(KC_Z),   LGUI_T(KC_X),    KC_C, ALT_T(KC_V), KC_B,    KC_N, KC_M,  KC_COMM, KC_DOT,  ALT_T(KC_Q),
-     XXXXXXX,         XXXXXXX ,LOWER,  LCTL_T(KC_SPACE),          SFT_T(KC_ENT), RAISE, MO(_SPECIAL), XXXXXXX
-  ),
-  [_LOWER] = LAYOUT(
-      KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  XXXXXXX,          JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, JP_CIRC,
-      KC_LCTRL, KC_ESC, KC_BSPC, KC_ENT, KC_DELETE,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, JP_COLN,
-      C(KC_Z), OSL(_WIN), ALT_SHIFT_TAB, ALT_TAB, XXXXXXX,   JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, S(KC_SLSH),
-      XXXXXXX,         XXXXXXX , _______, _______,                   SFT_T(LALT(KC_ENT)), _______, XXXXXXX, XXXXXXX
-  ),
-  [_RAISE] = LAYOUT(
-      XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,             XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, KC_DELETE,
-      KC_LSFT, KC_1, KC_2, KC_3, XXXXXXX,             KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, JU_SCLN,
-      KC_LSFT, KC_7, KC_8, KC_9, KC_LSFT,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  XXXXXXX,
-      XXXXXXX,          XXXXXXX ,_______, CTL_T(KC_0),            _______, _______ , XXXXXXX, XXXXXXX
-  ),
-  [_ADJUST] =  LAYOUT(
-      XXXXXXX, KC_F2, KC_PERC, XXXXXXX, XXXXXXX,     XXXXXXX, KC_F7, JP_DQUO, JP_DQUO, KC_F10,
-      KC_LCTRL, JP_TILD, JP_PIPE, JP_BSLS, XXXXXXX,    C(KC_PGUP), C(KC_DOWN), C(KC_UP), C(KC_PGDN), XXXXXXX,
-      XXXXXXX, C(KC_SPACE), XXXXXXX, JP_GRV,  XXXXXXX,     XXXXXXX, JP_PLUS,  XXXXXXX, XXXXXXX, XXXXXXX,
-      XXXXXXX,          XXXXXXX ,_______, _______,             _______, XXXXXXX, XXXXXXX, XXXXXXX
-  ),
-  [_SPECIAL] = LAYOUT(
-    XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F11,              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX,
-    XXXXXXX, KC_F7, KC_F8, KC_F9, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RESET,
-    XXXXXXX,          XXXXXXX ,XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
-  ),
-  [_WIN] = LAYOUT(
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_LGUI, G(KC_D), KC_F12, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, G(KC_L), XXXXXXX,
-    XXXXXXX, SWIN(KC_S), XXXXXXX, G(KC_V), XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX,          XXXXXXX ,XXXXXXX, OS_OFF,                 G(KC_ENT), XXXXXXX, XXXXXXX, XXXXXXX
-  ),
+  XXXXXXX	, KC_TAB,        KC_W,         KC_E, KC_R,        KC_T,                   KC_Y, KC_U,  KC_I,    KC_O,    LT(_SPECIAL, KC_BSPC), XXXXXXX
+  XXXXXXX	, LCTL_T(KC_A),  KC_S,         KC_D, KC_F,        KC_G,                   KC_H, KC_J,  KC_K,    KC_L,    KC_P,  XXXXXXX
+  XXXXXXX	, LSFT_T(KC_Z),  LGUI_T(KC_X), KC_C, ALT_T(KC_V), KC_B, XXXXXXX, XXXXXXX  KC_N, KC_M,  KC_COMM, KC_DOT,  ALT_T(KC_Q),
+	XXXXXXX	,							XXXXXXX	,	XXXXXXX	,	LOWER	,	LCTL_T(KC_SPACE)	,	XXXXXXX	,	SFT_T(KC_ENT)	,	RAISE	,	XXXXXXX	,	XXXXXXX	,
+			XXXXXXX	,	XXXXXXX	,							XXXXXXX	,	XXXXXXX	,			XXXXXXX	,	XXXXXXX
+),
+
+[_LOWER]=LAYOUT(   // Extension
+  XXXXXXX	, KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  XXXXXXX,                           JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, JP_CIRC,  XXXXXXX
+  XXXXXXX	, KC_LCTRL, KC_ESC, KC_BSPC, KC_ENT, KC_DELETE,                          KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, JP_COLN, XXXXXXX
+  XXXXXXX	, C(KC_Z), OSL(_WIN), ALT_SHIFT_TAB, ALT_TAB, XXXXXXX, XXXXXXX, XXXXXXX  JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, S(KC_SLSH),
+	XXXXXXX	,							XXXXXXX	,	XXXXXXX	,	_______	,	_______	,	XXXXXXX	,	SFT_T(LALT(KC_ENT))	,	_______	,	XXXXXXX	,	XXXXXXX	,
+			_______	,	_______	,							_______	,	_______	,			_______	,	_______
+),
+
+[_RAISE]=LAYOUT(    // NUM (Num pad)
+  XXXXXXX	, XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,                   XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, KC_DELETE, XXXXXXX
+  XXXXXXX	, KC_LSFT, KC_1, KC_2, KC_3, XXXXXXX,                   KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, JU_SCLN,  XXXXXXX
+  XXXXXXX	, KC_LSFT, KC_7, KC_8, KC_9, KC_LSFT, XXXXXXX, XXXXXXX  KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  XXXXXXX, 
+	XXXXXXX	,							XXXXXXX	,	XXXXXXX	,	_______	,	_______	,	XXXXXXX	,	_______	,	_______	,	XXXXXXX	,	XXXXXXX	,
+			_______	,	_______	,							_______	,	_______	,			_______	,	_______
+),
+[_ADJUST]=LAYOUT(    //FN (additional keys)
+  XXXXXXX	, XXXXXXX, KC_F2, KC_PERC, XXXXXXX, XXXXXXX,                        XXXXXXX, KC_F7, JP_DQUO, JP_DQUO, KC_F10,            XXXXXXX
+  XXXXXXX	, KC_LCTRL, JP_TILD, JP_PIPE, JP_BSLS, XXXXXXX,                     C(KC_PGUP), XXXXXXX, XXXXXXX, C(KC_PGDN), XXXXXXX, XXXXXXX
+  XXXXXXX	, XXXXXXX, C(KC_SPACE), JP_GRV, JP_GRV,  XXXXXXX, XXXXXXX, XXXXXXX  XXXXXXX, JP_PLUS,  XXXXXXX, XXXXXXX, XXXXXXX,  
+	XXXXXXX	,							XXXXXXX	,	XXXXXXX	,	_______	,	_______	,	XXXXXXX	,	_______	,	_______	,	XXXXXXX	,	XXXXXXX	,
+			_______	,	_______	,							_______	,	_______	,			_______	,	_______
+),
+[_SPECIAL]=LAYOUT(  //SYS (System utilz)
+  XXXXXXX	, KC_F4, KC_F5, KC_F6, XXXXXXX,                   XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX
+  XXXXXXX	, KC_F1, KC_F2, KC_F3, KC_F11,                    XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,                  XXXXXXX
+  XXXXXXX	, KC_F7, KC_F8, KC_F9, XXXXXXX, XXXXXXX, XXXXXXX  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,
+	XXXXXXX	,							XXXXXXX	,	XXXXXXX	,	_______	,	_______	,	XXXXXXX	,	_______	,	_______	,	XXXXXXX	,	XXXXXXX	,
+			_______	,	_______	,							_______	,	_______	,			_______	,	_______
+),
+[_WIN]=LAYOUT(  //SYS (System utilz)
+  XXXXXXX	, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX
+  XXXXXXX	, XXXXXXX, KC_LGUI, G(KC_D), KC_F12, XXXXXXX,                       XXXXXXX, XXXXXXX,  XXXXXXX, G(KC_L),  XXXXXXX, XXXXXXX
+  XXXXXXX	, XXXXXXX, SWIN(KC_S), XXXXXXX, G(KC_V), XXXXXXX, XXXXXXX, XXXXXXX  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  XXXXXXX,
+	XXXXXXX	,							XXXXXXX	,	XXXXXXX	,	_______	,	OS_OFF	,	XXXXXXX	,	G(KC_ENT)	,	_______	,	XXXXXXX	,	XXXXXXX	,
+			_______	,	_______	,							_______	,	_______	,			_______	,	_______
+)
+
 };
+
 
 static bool lower_pressed = false;
 static bool raise_pressed = false;
@@ -371,9 +379,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_Z):
             return TAPPING_TERM + 30;
             break;
-        case SFT_T(KC_ENT):
-            return TAPPING_TERM - 20;
-            break;
+        // case SFT_T(KC_ENT):
+        //     return TAPPING_TERM;
+        //     break;
         case ALT_T(KC_V):
             return TAPPING_TERM + 30;
             break;
@@ -382,9 +390,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             break;
         case LCTL_T(KC_A):
             return TAPPING_TERM + 50;
-            break;
-        case CTL_T(KC_0):
-            return TAPPING_TERM + 10;
             break;
         default:
             return TAPPING_TERM;

@@ -1,4 +1,4 @@
-/* Copyright 2022 tamago324
+/* Copyright 2021 hanachi-ap
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,14 +27,15 @@
  * represents the switch matrix.
  */
 #define LAYOUT( \
-	K00, K01, K02, K03, K04,       K05, K06, K07, K08, K09, \
-	K10, K11, K12, K13, K14,       K15, K16, K17, K18, K19, \
-	K20, K21, K22, K23, K24,       K25, K26, K27, K28, K29, \
-	          K32, K33, K34,       K35, K36, K37           \
-) \
-{ \
-	{ K00,   K01,     K02,   K03,  K04,  K05,  K06,  K07,   K08,   K09   }, \
-	{ K10,   K11,     K12,   K13,  K14,  K15,  K16,  K17,   K18,   K19   }, \
-	{ K20,   K21,     K22,   K23,  K24,  K25,  K26,  K27,   K28,   K29   }, \
-	{ KC_NO, KC_NO,   K32,   K33,  K34,  K35,  K36,  K37,   KC_NO, KC_NO }  \
+          KA01, KA02, KA03, KA04, KA05, KA06,                   KA10, KA11, KA12, KA13, KA14, KA15, KD14, \
+          KB01, KB02, KB03, KB04, KB05, KB06,                   KB10, KB11, KB12, KB13, KB14, KB15, KD15, \
+          KC01, KC02, KC03, KC04, KC05, KC06, KC07,       KC09, KC10, KC11, KC12, KC13, KC14, KC15,       \
+          KD01,             KD04, KD05, KD06, KD07, KB09, KD09, KD10, KD11, KD12,                         \
+          KD02, KD03,                     KA07,KB07,        KA09,KD13                                    \
+) { \
+        { KA01, KA02, KA03, KA04, KA05, KA06, KA07,      KA09, KA10, KA11, KA12, KA13, KA14, KA15  }, \
+        { KB01, KB02, KB03, KB04, KB05, KB06, KB07,      KB09, KB10, KB11, KB12, KB13, KB14, KB15  }, \
+        { KC01, KC02, KC03, KC04, KC05, KC06, KC07,      KC09, KC10, KC11, KC12, KC13, KC14, KC15  }, \
+        { KD01, KD02, KD03, KD04, KD05, KD06, KD07,      KD09, KD10, KD11, KD12, KD13, KD14, KD15  }  \
 }
+

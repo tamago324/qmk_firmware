@@ -1,0 +1,10 @@
+Colemak DH
+         KC_TAB,  KC_W,    KC_F, KC_P,        KC_B,    KC_J, KC_L,  KC_U,    KC_Y,    LT(_SPECIAL, KC_BSPC),
+  LCTL_T(KC_A),    KC_R,    KC_S, KC_T,        KC_G,    KC_M, KC_N,  KC_E,    KC_I,    KC_O,
+  LSFT_T(KC_Z),   KC_X,    KC_C, ALT_T(KC_D), KC_V,    KC_K, KC_H,  KC_COMM, KC_DOT,  ALT_T(KC_Q),
+
+
+QWERTY
+         KC_TAB,  KC_W,    KC_E, KC_R,        KC_T,    KC_Y, KC_U,  KC_I,    KC_O,    LT(_SPECIAL, KC_BSPC),
+  LCTL_T(KC_A),    KC_S,    KC_D, KC_F,        KC_G,    KC_H, KC_J,  KC_K,    KC_L,    KC_P,
+  LSFT_T(KC_Z),   KC_X,    KC_C, ALT_T(KC_V), KC_B,    KC_N, KC_M,  KC_COMM, KC_DOT,  ALT_T(KC_Q),

@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID   0x0000
 #define DEVICE_VER   0x0001
 #define MANUFACTURER tamago324
-#define PRODUCT      kari34
+#define PRODUCT      nnkb
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -42,8 +42,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /* #define MATRIX_ROW_PINS { B4, B5, B2, B6 } */
 /* #define MATRIX_COL_PINS { F5, F6, F7, B1, B3, E6, D7, C6, D4, D0 } */
-#define MATRIX_ROW_PINS { F6, F7, B1, B3 }
-#define MATRIX_COL_PINS { D1, D0, D4, C6, D7, E6, B4, B5, F4, F5 }
+#define MATRIX_ROW_PINS { D4, C6, D7, E6 }
+#define MATRIX_COL_PINS { F4, F5, F6, F7, B1, B3, B2, B6, B4, B5 }
 #define UNUSED_PINS
 
 /* COL2ROW, ROW2COL */
@@ -52,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /*
  * Split Keyboard specific options, make sure you have 'SPLIT_KEYBOARD = yes' in your rules.mk, and define SOFT_SERIAL_PIN.
  */
-#define SOFT_SERIAL_PIN D0  // or D1, D2, D3, E6
+/* #define SOFT_SERIAL_PIN D0  // or D1, D2, D3, E6 */
 
 //#define LED_NUM_LOCK_PIN B0
 //#define LED_CAPS_LOCK_PIN B1
@@ -91,6 +91,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#    define RGBLIGHT_EFFECT_BREATHE_CENTER 1.85  // 1 to 2.7
 //#    define RGBLIGHT_EFFECT_BREATHE_MAX    255   // 0 to 255
 //#endif
+
+/* #ifdef RGB_MATRIX_ENABLE                          */
+/* #    define RGBLED_NUM       44 // Number of LEDs */
+/* #    define DRIVER_LED_TOTAL RGBLED_NUM           */
+/* #    define SPLIT_TRANSPORT_MIRROR                */
+/* #endif                                            */
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 /* #define DEBOUNCE 5 */
