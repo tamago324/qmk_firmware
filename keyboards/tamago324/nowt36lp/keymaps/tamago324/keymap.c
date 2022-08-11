@@ -190,9 +190,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         XXXXXXX ,_______, _______,             _______, _______, XXXXXXX
   ),
   [_SPECIAL] = LAYOUT(
-    XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             RGB_VAI, RGB_SAI, RGB_HUI, RGB_MOD,  XXXXXXX,
-    KC_LCTRL, KC_F1, KC_F2, KC_F3, KC_F11,              RGB_VAD, RGB_SAD, RGB_HUD, RGB_RMOD, XXXXXXX,
-    KC_LSFT, KC_F7, KC_F8, KC_F9, XXXXXXX,             RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX,  RESET,
+    XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
+    KC_LCTRL, KC_F1, KC_F2, KC_F3, KC_F11,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    KC_LSFT, KC_F7, KC_F8, KC_F9, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  RESET,
                      XXXXXXX ,XXXXXXX, XXXXXXX,                _______, _______, _______
   ),
   [_WIN] = LAYOUT(
