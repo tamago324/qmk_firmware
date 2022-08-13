@@ -1,7 +1,7 @@
 {
   "name": "nowt36",
   "vendorId": "0x1926",
-  "productId": "0x030A",
+  "productId": "0x030B",
   "lighting": "qmk_rgblight",
   "matrix": { "rows": 4, "cols": 10 },
   "layouts": {
