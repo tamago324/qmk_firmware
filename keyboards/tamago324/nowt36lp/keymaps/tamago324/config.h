@@ -38,3 +38,6 @@
 /* #undef NO_ACTION_ONESHOT // ワンショットキーの無効化 */
 
 #define LAYER_STATE_8BIT    // レイヤーの上限を8にする
+
+// Shift が抜ける問題への対処法の1つらしい
+#define USB_POLLING_INTERVAL_MS 10
