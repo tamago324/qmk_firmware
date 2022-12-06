@@ -63,7 +63,7 @@ const uint16_t PROGMEM comb_keys_minus_left_arrow[] = {JP_MINS, JP_LPRN, COMBO_E
 // --
 const uint16_t PROGMEM comb_keys_minus_minus[] = {JP_MINS, JP_LBRC, COMBO_END};
 // // -
-// const uint16_t PROGMEM comb_keys_minus[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM comb_keys_minus[] = {KC_J, KC_K, COMBO_END};
 
 // // nj -> NI
 // const uint16_t PROGMEM comb_keys_nj_ni[] = {KC_N, KC_J, COMBO_END};
@@ -79,7 +79,7 @@ combo_t key_combos[COMBO_COUNT] = {
   [CMB_EQ_LEFT_ARROW] = COMBO_ACTION(comb_keys_eq_left_arrow),
   [CMB_MINUS_LEFT_ARROW] = COMBO_ACTION(comb_keys_minus_left_arrow),
   [CMB_MINUS_MINUS] = COMBO_ACTION(comb_keys_minus_minus),
-  // [CMB_MINUS] = COMBO_ACTION(comb_keys_minus),
+  [CMB_MINUS] = COMBO_ACTION(comb_keys_minus),
   // [CMB_NJ_NI] = COMBO_ACTION(comb_keys_nj_ni),
   // [CMB_NK_NO] = COMBO_ACTION(comb_keys_nk_no),
   // [CMB_ML_MO] = COMBO_ACTION(comb_keys_ml_mo),
@@ -110,11 +110,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       }
       break;
 
-    // case CMB_MINUS:
-    //   if (pressed) {
-    //     tap_code16(JP_MINS);
-    //   }
-    //   break;
+    case CMB_MINUS:
+      if (pressed) {
+        tap_code16(JP_MINS);
+      }
+      break;
 
     // case CMB_NJ_NI:
     //   if (pressed) {
