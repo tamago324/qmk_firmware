@@ -46,8 +46,13 @@ enum custom_keycodes {
 
 enum combo_events {
   CMB_EQ_LEFT_ARROW,
+  CMB_EQ_LEFT_ARROW2,
   CMB_MINUS_LEFT_ARROW,
   CMB_MINUS_MINUS,
+  CMB_NJ_NI,
+  // CMB_NK_NO,
+  // CMB_ML_MO,
+  CMB_MINUS,
 };
 
 
@@ -60,10 +65,25 @@ const uint16_t PROGMEM comb_keys_minus_minus[] = {JP_MINS, JP_LBRC, COMBO_END};
 // // -
 const uint16_t PROGMEM comb_keys_minus[] = {KC_J, KC_K, COMBO_END};
 
+// // nj -> NI
+// const uint16_t PROGMEM comb_keys_nj_ni[] = {KC_N, KC_J, COMBO_END};
+// // nk -> NO
+// const uint16_t PROGMEM comb_keys_nk_no[] = {KC_N, KC_K, COMBO_END};
+
+// // mk -> MI
+// const uint16_t PROGMEM comb_keys_mk_mi[] = {KC_M, KC_K, COMBO_END};
+// // ml -> MO
+// const uint16_t PROGMEM comb_keys_ml_mo[] = {KC_M, KC_L, COMBO_END};
+
 combo_t key_combos[COMBO_COUNT] = {
   [CMB_EQ_LEFT_ARROW] = COMBO_ACTION(comb_keys_eq_left_arrow),
   [CMB_MINUS_LEFT_ARROW] = COMBO_ACTION(comb_keys_minus_left_arrow),
   [CMB_MINUS_MINUS] = COMBO_ACTION(comb_keys_minus_minus),
+  [CMB_MINUS] = COMBO_ACTION(comb_keys_minus),
+  // [CMB_NJ_NI] = COMBO_ACTION(comb_keys_nj_ni),
+  // [CMB_NK_NO] = COMBO_ACTION(comb_keys_nk_no),
+  // [CMB_ML_MO] = COMBO_ACTION(comb_keys_ml_mo),
+  // [CMB_MK_MI] = COMBO_ACTION(comb_keys_mk_mi),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -89,6 +109,41 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         tap_code16(JP_MINS);
       }
       break;
+
+    case CMB_MINUS:
+      if (pressed) {
+        tap_code16(JP_MINS);
+      }
+      break;
+
+    // case CMB_NJ_NI:
+    //   if (pressed) {
+    //     tap_code16(KC_N);
+    //     tap_code16(KC_I);
+    //   }
+    //   break;
+
+    // case CMB_NK_NO:
+    //   if (pressed) {
+    //     tap_code16(KC_N);
+    //     tap_code16(KC_O);
+    //   }
+    //   break;
+
+    // case CMB_MK_MI:
+    //   if (pressed) {
+    //     tap_code16(KC_M);
+    //     tap_code16(KC_I);
+    //   }
+    //   break;
+
+    // case CMB_ML_MO:
+    //   if (pressed) {
+    //     tap_code16(KC_M);
+    //     tap_code16(KC_O);
+    //   }
+    //   break;
+
   }
 }
 
@@ -137,7 +192,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_SPECIAL] = LAYOUT(
     XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
     KC_LCTRL, KC_F1, KC_F2, KC_F3, KC_F11,              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    KC_LSFT, KC_F7, KC_F8, KC_F9, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  RESET,
+    KC_LSFT, KC_F7, KC_F8, KC_F9, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
                      XXXXXXX ,XXXXXXX, XXXXXXX,                _______, _______, _______
   ),
   [_WIN] = LAYOUT(
@@ -386,9 +441,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //       lower_pressed = false;
     //       raise_pressed = false;
     //       zshift_pressed = false;
-    //
+    //     
     //       alt_tab_pressed = true;
-    //
+    // 
     //       // ALT を押し続ける
     //       register_code(KC_LALT);
     //     }
@@ -397,7 +452,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //     unregister_code(KC_TAB);
     //   }
     //   break;
-    //
+    // 
     // case ALT_SHIFT_TAB:
     //   if (record->event.pressed) {
     //     // 初めて押したら、Altを押し続ける
@@ -406,9 +461,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //       lower_pressed = false;
     //       raise_pressed = false;
     //       zshift_pressed = false;
-    //
+    //     
     //       alt_shift_tab_pressed = true;
-    //
+    // 
     //       // ALT を押し続ける
     //       register_code(KC_LALT);
     //     }
