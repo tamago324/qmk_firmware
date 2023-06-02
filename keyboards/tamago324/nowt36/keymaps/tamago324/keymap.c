@@ -1,3 +1,4 @@
+
 /* Copyright 2022 tamago324
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,8 +25,7 @@ enum layer_names {
   _ADJUST,
   _SPECIAL,
   _WIN,
-  // _L1,
-  _ALT_L,
+  _LL,
 };
 
 // Defines the keycodes used by our macros in process_record_user
@@ -36,23 +36,16 @@ enum custom_keycodes {
   ADJUST,
   JU_SCLN,
   JU_QUOT,
-  // ALT_TAB,
-  // ALT_SHIFT_TAB,
+  ALT_TAB,
+  ALT_S_TAB,
   SPECIAL,
-  ALT_L,
-  // L1,
-  KEY_STAB,
+  LL
 };
 
 enum combo_events {
   CMB_EQ_LEFT_ARROW,
-  CMB_EQ_LEFT_ARROW2,
   CMB_MINUS_LEFT_ARROW,
   CMB_MINUS_MINUS,
-  CMB_NJ_NI,
-  // CMB_NK_NO,
-  // CMB_ML_MO,
-  CMB_MINUS,
 };
 
 
@@ -65,25 +58,10 @@ const uint16_t PROGMEM comb_keys_minus_minus[] = {JP_MINS, JP_LBRC, COMBO_END};
 // // -
 // const uint16_t PROGMEM comb_keys_minus[] = {KC_J, KC_K, COMBO_END};
 
-// // nj -> NI
-// const uint16_t PROGMEM comb_keys_nj_ni[] = {KC_N, KC_J, COMBO_END};
-// // nk -> NO
-// const uint16_t PROGMEM comb_keys_nk_no[] = {KC_N, KC_K, COMBO_END};
-
-// // mk -> MI
-// const uint16_t PROGMEM comb_keys_mk_mi[] = {KC_M, KC_K, COMBO_END};
-// // ml -> MO
-// const uint16_t PROGMEM comb_keys_ml_mo[] = {KC_M, KC_L, COMBO_END};
-
 combo_t key_combos[COMBO_COUNT] = {
   [CMB_EQ_LEFT_ARROW] = COMBO_ACTION(comb_keys_eq_left_arrow),
   [CMB_MINUS_LEFT_ARROW] = COMBO_ACTION(comb_keys_minus_left_arrow),
   [CMB_MINUS_MINUS] = COMBO_ACTION(comb_keys_minus_minus),
-  // [CMB_MINUS] = COMBO_ACTION(comb_keys_minus),
-  // [CMB_NJ_NI] = COMBO_ACTION(comb_keys_nj_ni),
-  // [CMB_NK_NO] = COMBO_ACTION(comb_keys_nk_no),
-  // [CMB_ML_MO] = COMBO_ACTION(comb_keys_ml_mo),
-  // [CMB_MK_MI] = COMBO_ACTION(comb_keys_mk_mi),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -109,41 +87,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         tap_code16(JP_MINS);
       }
       break;
-
-    // case CMB_MINUS:
-    //   if (pressed) {
-    //     tap_code16(JP_MINS);
-    //   }
-    //   break;
-
-    // case CMB_NJ_NI:
-    //   if (pressed) {
-    //     tap_code16(KC_N);
-    //     tap_code16(KC_I);
-    //   }
-    //   break;
-
-    // case CMB_NK_NO:
-    //   if (pressed) {
-    //     tap_code16(KC_N);
-    //     tap_code16(KC_O);
-    //   }
-    //   break;
-
-    // case CMB_MK_MI:
-    //   if (pressed) {
-    //     tap_code16(KC_M);
-    //     tap_code16(KC_I);
-    //   }
-    //   break;
-
-    // case CMB_ML_MO:
-    //   if (pressed) {
-    //     tap_code16(KC_M);
-    //     tap_code16(KC_O);
-    //   }
-    //   break;
-
   }
 }
 
@@ -169,25 +112,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_TAB,  KC_W,    KC_E, KC_R,        KC_T,    KC_Y, KC_U,  KC_I,    KC_O,    KC_BSPC,
   LCTL_T(KC_A),   KC_S,    KC_D, KC_F,        KC_G,    KC_H, KC_J,  KC_K,    KC_L,    KC_P,
   LSFT_T(KC_Z),   KC_X,    KC_C, ALT_T(KC_V), KC_B,    KC_N, KC_M,  KC_COMM, KC_DOT,  ALT_T(KC_Q),
-                      ALT_L, LOWER,  LCTL_T(KC_SPACE),          SFT_T(KC_ENT), RAISE, SPECIAL
+                           LL, LOWER,  LCTL_T(KC_SPACE),          SFT_T(KC_ENT), RAISE, SPECIAL
   ),
   [_LOWER] = LAYOUT(
-      KC_EXLM, JP_AT,   KC_HASH, KC_DLR,  XXXXXXX,          JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, S(KC_SLSH),
-      KC_LCTRL, KC_ESC, KC_BSPC, KC_ENT, KC_DELETE,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, XXXXXXX,
-      OSL(_WIN), XXXXXXX, XXXXXXX, C(KC_Z),  JP_CIRC,   JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, XXXXXXX,
-                       XXXXXXX , _______, _______,                   SFT_T(LALT(KC_ENT)), _______, XXXXXXX
+      KC_BSPC, JP_AT,   KC_HASH, KC_DLR,  JP_CIRC,          JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, S(KC_SLSH),
+      KC_LCTRL, KC_ESC, ALT_S_TAB, ALT_TAB, KC_ENT,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, XXXXXXX,
+      OSL(_WIN), KC_TAB, XXXXXXX, KC_DELETE,  KC_EXLM,   JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, XXXXXXX,
+                         XXXXXXX, _______, _______,                   SFT_T(LALT(KC_ENT)), _______, XXXXXXX
   ),
   [_RAISE] = LAYOUT(
       XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,             XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, KC_DELETE,
-      KC_LSFT, KC_1, KC_2, KC_3, JP_COLN,             KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, XXXXXXX,
-      KC_LSFT, KC_7, KC_8, KC_9, JU_SCLN,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  XXXXXXX,
-                        KC_LALT ,_______, CTL_T(KC_0),            _______, _______ , XXXXXXX
+      KC_LSFT, KC_1, KC_2, KC_3, JP_COLN,             KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, KC_DOT,
+      KC_LSFT, KC_7, KC_8, KC_9, JU_SCLN,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  KC_DELETE,
+                         XXXXXXX, _______, CTL_T(KC_0),            _______, _______, XXXXXXX
   ),
   [_ADJUST] =  LAYOUT(
-      XXXXXXX, KC_F2, KC_PERC, XXXXXXX, XXXXXXX,     XXXXXXX, KC_F7, JP_DQUO, JP_DQUO, KC_F10,
+      XXXXXXX, KC_F2, KC_PERC, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, JP_DQUO, JP_DQUO, XXXXXXX,
       KC_LCTRL, JP_TILD, JP_PIPE, JP_BSLS, XXXXXXX,    C(KC_PGUP), C(KC_DOWN), C(KC_UP), C(KC_PGDN), XXXXXXX,
-      XXXXXXX, C(KC_SPACE), XXXXXXX, JP_GRV,  XXXXXXX,     XXXXXXX, JP_PLUS,  XXXXXXX, XXXXXXX, XXXXXXX,
-                        XXXXXXX ,_______, _______,             _______, _______, XXXXXXX
+      XXXXXXX, C(KC_SPACE), XXXXXXX, JP_GRV,  XXXXXXX,     KC_F7, JP_PLUS,  KC_F10, XXXXXXX, XXXXXXX,
+                         XXXXXXX,  _______, _______,             _______, _______, XXXXXXX
   ),
   [_SPECIAL] = LAYOUT(
     XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             RGB_VAI, RGB_SAI, RGB_HUI, RGB_MOD,  XXXXXXX,
@@ -199,40 +142,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX, G(KC_D), KC_F12, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, G(KC_L), XXXXXXX,
     XXXXXXX,  KC_LGUI, SWIN(KC_S), G(KC_V), XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                     XXXXXXX ,_______, XXXXXXX,                 G(KC_ENT), _______, XXXXXXX
+                   XXXXXXX, _______, XXXXXXX,                 G(KC_ENT), _______, XXXXXXX
   ),
-  [_ALT_L] = LAYOUT(
+  [_LL] = LAYOUT(
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, KEY_STAB, KC_TAB, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                      _______ ,XXXXXXX, XXXXXXX,       XXXXXXX, _______, XXXXXXX
+    XXXXXXX, XXXXXXX, ALT_S_TAB, ALT_TAB, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                   XXXXXXX, _______, XXXXXXX,                 XXXXXXX, _______, XXXXXXX
   ),
-  // [_L1] = LAYOUT(
-  //   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //   KC_LCTRL, C(JP_MINS), C(JP_PLUS), XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //   KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //                    _______ ,XXXXXXX, XXXXXXX,                 XXXXXXX, RAISE, XXXXXXX
-  // ),
-  // [_ALT_NUM] = LAYOUT(
-  //     XXXXXXX, A(KC_4), A(KC_5), A(KC_6), XXXXXXX,             XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //     KC_LSFT, A(KC_1), A(KC_2), A(KC_3), A(KC_0),             XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //     KC_LSFT, A(KC_7), A(KC_8), A(KC_9), XXXXXXX,             XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //                       _______ ,_______, XXXXXXX,            _______, _______ , XXXXXXX
-  // ),
 };
 
 static bool lower_pressed = false;
 static bool raise_pressed = false;
 static bool zshift_pressed = false;
 static bool alt_tab_pressed = false;
-static bool alt_layer_on = false;
-// static bool alt_tab_pressed = false;
-// static bool alt_shift_tab_pressed = false;
+static bool alt_shift_tab_pressed = false;
 
 // lower を長押ししたら単推しとしてみなさないようにするためのタイマー
 static uint16_t lower_pressed_time = 0;
 static uint16_t raise_pressed_time = 0;
-static uint16_t alt_tab_pressed_time = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -258,14 +186,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_LOWER);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
 
-        // if (alt_tab_pressed || alt_shift_tab_pressed) {
-        //   // もし、Lower を離したときに、ALT が押しっぱになっていたら、離す
-        //   unregister_code(KC_LALT);
-        //   alt_tab_pressed = false;
-        //   alt_shift_tab_pressed = false;
-        //   // また、無変換は送信しない
-        //   return false;
-        // }
+        if (alt_tab_pressed || alt_shift_tab_pressed) {
+          // もし、Lower を離したときに、ALT が押しっぱになっていたら、離す
+          unregister_code(KC_LALT);
+          alt_tab_pressed = false;
+          alt_shift_tab_pressed = false;
+          // また、無変換は送信しない
+          return false;
+        }
 
         if (lower_pressed && TIMER_DIFF_16(record->event.time, lower_pressed_time) < TAPPING_TERM) {
           // もし、長押しをしていなければ、無変換を送信する
@@ -314,6 +242,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_SPECIAL);
       } else {
         layer_off(_SPECIAL);
+      }
+
+      return false;
+      break;
+
+    case LL:
+      if (record->event.pressed) {
+        layer_on(_LL);
+      } else {
+        layer_off(_LL);
       }
 
       return false;
@@ -398,81 +336,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
 
-    // S 長押しで、ALT レイヤーに移動する
-    case ALT_L:
+    case ALT_TAB:
       if (record->event.pressed) {
-        // タイマースタート
-        alt_tab_pressed = true;
-        alt_tab_pressed_time = record->event.time;
+        // 初めて押したら、Altを押し続ける
+        // また、TAB も送信する
+        if (!alt_tab_pressed || !alt_shift_tab_pressed) {
+          lower_pressed = false;
+          raise_pressed = false;
+          zshift_pressed = false;
 
-        // LOWER でもRAISEでもない文字だった場合、戻しておく
-        lower_pressed = false;
-        raise_pressed = false;
-        zshift_pressed = false;
+          alt_tab_pressed = true;
 
-      } else {
-        alt_tab_pressed = false;
-        alt_tab_pressed_time = 0;
-
-        if (alt_layer_on) {
-          layer_off(_ALT_L);
-          unregister_code(KC_LALT);
-        } else {
-          tap_code(KC_LALT);
+          // ALT を押し続ける
+          register_code(KC_LALT);
         }
-
-        alt_layer_on = false;
+        register_code(KC_TAB);
+      } else {
+        unregister_code(KC_TAB);
       }
-      return false;
       break;
 
-    case KEY_STAB:
+    case ALT_S_TAB:
       if (record->event.pressed) {
-        tap_code16(S(KC_TAB));
+        // 初めて押したら、Altを押し続ける
+        // また、TAB も送信する
+        if (!alt_tab_pressed || !alt_shift_tab_pressed) {
+          lower_pressed = false;
+          raise_pressed = false;
+          zshift_pressed = false;
+
+          alt_shift_tab_pressed = true;
+
+          // ALT を押し続ける
+          register_code(KC_LALT);
+        }
+        register_code16(S(KC_TAB));
+      } else {
+        unregister_code16(S(KC_TAB));
       }
-      return false;
       break;
 
-    // case ALT_TAB:
-    //   if (record->event.pressed) {
-    //     // 初めて押したら、Altを押し続ける
-    //     // また、TAB も送信する
-    //     if (!alt_tab_pressed || !alt_shift_tab_pressed) {
-    //       lower_pressed = false;
-    //       raise_pressed = false;
-    //       zshift_pressed = false;
-    //     
-    //       alt_tab_pressed = true;
-    // 
-    //       // ALT を押し続ける
-    //       register_code(KC_LALT);
-    //     }
-    //     register_code(KC_TAB);
-    //   } else {
-    //     unregister_code(KC_TAB);
-    //   }
-    //   break;
-    // 
-    // case ALT_SHIFT_TAB:
-    //   if (record->event.pressed) {
-    //     // 初めて押したら、Altを押し続ける
-    //     // また、TAB も送信する
-    //     if (!alt_tab_pressed || !alt_shift_tab_pressed) {
-    //       lower_pressed = false;
-    //       raise_pressed = false;
-    //       zshift_pressed = false;
-    //     
-    //       alt_shift_tab_pressed = true;
-    // 
-    //       // ALT を押し続ける
-    //       register_code(KC_LALT);
-    //     }
-    //     register_code16(S(KC_TAB));
-    //   } else {
-    //     unregister_code16(S(KC_TAB));
-    //   }
-    //   break;
-    //
     // case L1:
     //   if (record->event.pressed) {
     //     layer_on(_L1);
@@ -504,17 +407,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   return true;
-}
-
-void matrix_scan_user(void) {
-  // もし、500ms 押していたら、レイヤー移動
-  if (alt_tab_pressed) {
-    if (timer_elapsed(alt_tab_pressed_time) > 50) {
-      layer_on(_ALT_L);
-      register_code(KC_LALT);
-      alt_layer_on = true;
-    }
-  }
 }
 
 // https://docs.qmk.fm/#/tap_hold?id=tapping-term
@@ -549,3 +441,4 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             break;
     }
 }
+

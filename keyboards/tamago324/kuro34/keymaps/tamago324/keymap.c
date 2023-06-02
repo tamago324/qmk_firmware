@@ -120,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_RAISE] = LAYOUT(
       XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX,             XXXXXXX,  XXXXXXX, JU_QUOT, JU_QUOT, KC_DELETE,
       KC_LSFT, KC_1, KC_2, KC_3, JP_COLN,             KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, KC_DOT,
-      KC_LSFT, KC_7, KC_8, KC_9, JU_SCLN,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  KC_COMM,
+      KC_LSFT, KC_7, KC_8, KC_9, JU_SCLN,             KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  KC_DELETE,
                                  _______, CTL_T(KC_0),            _______, _______
   ),
   [_ADJUST] =  LAYOUT(

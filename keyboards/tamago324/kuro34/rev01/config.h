@@ -21,14 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* USB Device descriptor parameter */
 #define VENDOR_ID    0x1926
-#define PRODUCT_ID   0x041B
+#define PRODUCT_ID   0x041A
 #define DEVICE_VER   0x0001
 /* #define MANUFACTURER tamago324 */
-#define PRODUCT      gu34
+#define PRODUCT      kuro34
 
 /* key matrix size */
 #define MATRIX_ROWS 8
-#define MATRIX_COLS 10
+#define MATRIX_COLS 5
 
 /*
  * Keyboard Matrix Assignments
@@ -40,10 +40,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
  */
-#define MATRIX_ROW_PINS { GP29, GP13, GP12, GP11 }
-#define MATRIX_COL_PINS { GP28, GP27, GP14, GP15, GP26, GP3, GP4, GP5, GP6, GP7 }
+#define MATRIX_ROW_PINS { GP26, GP27, GP28, GP29 }
+#define MATRIX_COL_PINS { GP6, GP7, GP3, GP4, GP2 }
 
 /* COL2ROW, ROW2COL */
 #define DIODE_DIRECTION COL2ROW
+
+// https://github.com/qmk/qmk_firmware/blob/master/docs/serial_driver.md#the-pio-driver
+// RP2040専用の機能
+// PIO ペリフェラルの柔軟な性質により、任意のGPIO ピンをTXまたはRXピンとして使用できます。
+#define SERIAL_PIO_USE_PIO1
+#define SERIAL_USART_TX_PIN GP1
 
 #define DEBOUNCE 50
