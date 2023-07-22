@@ -8,45 +8,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                       KC_HENK, KC_SPACE,   KC_ENT, KC_MHEN
     ),
     [1] = LAYOUT(
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
-                                     XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______, _______, _______,
+                                     _______, _______,    _______, _______
     ),
     [2] = LAYOUT(
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
-                                     XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______, _______, _______,
+                                     _______, _______,    _______, _______
     ),
     [3] = LAYOUT(
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
-                                     XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______, _______, _______,
+                                     _______, _______,    _______, _______
     ),
     [4] = LAYOUT(
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
-                                     XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______, _______, _______,
+                                     _______, _______,    _______, _______
     ),
     [5] = LAYOUT(
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
-                                     XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______, _______, _______,
+                                     _______, _______,    _______, _______
     ),
     [6] = LAYOUT(
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
-                                     XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______, _______, _______,
+                                     _______, _______,    _______, _______
     ),
     [7] = LAYOUT(
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,   XXXXXXX,
-          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,
-                                     XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______,    _______,   _______,
+          _______, _______, _______, _______, _______,    _______, _______,  _______, _______, _______,
+                                     _______, _______,    _______, _______
     )
 };
