@@ -6,7 +6,7 @@
 #define VIAL_UNLOCK_COMBO_ROWS { 0, 0 }
 #define VIAL_UNLOCK_COMBO_COLS { 0, 10 }
 
-#define LAYER_STATE_8BIT    // レイヤーの上限を8にする
+// レイヤーの上限を8にする
+#define LAYER_STATE_8BIT
 
-// Shift が抜ける問題への対処法の1つらしい
-#define USB_POLLING_INTERVAL_MS 10
+#define DYNAMIC_KEYMAP_LAYER_COUNT 8

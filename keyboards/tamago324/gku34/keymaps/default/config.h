@@ -5,9 +5,6 @@
 // https://qiita.com/uodna/items/6d23581d26c1adb23377
 #define TAPPING_FORCE_HOLD
 
-// Mod Tap Key と通常キーを連続して拘束に押したときに両方のキーを Tap として扱う
-#define IGNORE_MOD_TAP_INTERRUPT
-
 // キーごとに タップとホールドの時間を設定する
 //#define TAPPING_TERM_PER_KEY
 #define TAPPING_TERM 145
@@ -15,8 +12,6 @@
 // キーごとに TAPPING_TERM を設定できるようにする
 #define TAPPING_TERM_PER_KEY
 
-// コンボを使用する数を指定
-#define COMBO_COUNT 8
 #define COMBO_TERM 100
 
 // サイズを小さくするためのもの https://zenn.dev/koron/articles/98324ab760e83a

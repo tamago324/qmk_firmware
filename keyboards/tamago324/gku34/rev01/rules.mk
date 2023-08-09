@@ -1,13 +1,3 @@
-# MCU name
-MCU = RP2040
-
-# Bootloader selection
-#   Pro Micro    caterina
-BOOTLOADER = rp2040
-
-# Build Options
-#   change yes to no to disable
-#
 BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
 MOUSEKEY_ENABLE = no       # Mouse keys
 EXTRAKEY_ENABLE = no       # Audio control and System control

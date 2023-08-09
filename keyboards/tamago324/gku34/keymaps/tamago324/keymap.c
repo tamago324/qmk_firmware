@@ -55,7 +55,7 @@ const uint16_t PROGMEM comb_keys_minus_minus[] = {JP_MINS, JP_LBRC, COMBO_END};
 // // -
 // const uint16_t PROGMEM comb_keys_minus[] = {KC_J, KC_K, COMBO_END};
 
-combo_t key_combos[COMBO_COUNT] = {
+combo_t key_combos[] = {
   [CMB_EQ_LEFT_ARROW] = COMBO_ACTION(comb_keys_eq_left_arrow),
   [CMB_MINUS_LEFT_ARROW] = COMBO_ACTION(comb_keys_minus_left_arrow),
   [CMB_MINUS_MINUS] = COMBO_ACTION(comb_keys_minus_minus),
@@ -109,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [_LOWER] = LAYOUT(
       XXXXXXX, JP_AT,   KC_HASH, KC_DLR,  JP_CIRC,          JP_ASTR, JP_AMPR, JP_LPRN, JP_RPRN, S(KC_SLSH),
-      KC_LCTRL, KC_ESC, KC_BSPC, KC_ENT, KC_DELETE,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, XXXXXXX,
+      KC_LCTL, KC_ESC, KC_BSPC, KC_ENT, KC_DELETE,        KC_SLSH, JP_MINS,  JP_LBRC, JP_RBRC, XXXXXXX,
       OSL(_WIN), KC_TAB, ALT_S_TAB, ALT_TAB,  KC_EXLM,   JP_UNDS, JP_EQL, JP_LCBR, JP_RCBR, XXXXXXX,
                                  _______, _______,                   SFT_T(LALT(KC_ENT)), _______
   ),
@@ -121,13 +121,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [_ADJUST] =  LAYOUT(
       XXXXXXX, KC_F2, KC_PERC, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, JP_DQUO, JP_DQUO, XXXXXXX,
-      KC_LCTRL, JP_TILD, JP_PIPE, JP_BSLS, XXXXXXX,    C(KC_PGUP), C(KC_DOWN), C(KC_UP), C(KC_PGDN), XXXXXXX,
+      KC_LCTL, JP_TILD, JP_PIPE, JP_BSLS, XXXXXXX,    C(KC_PGUP), C(KC_DOWN), C(KC_UP), C(KC_PGDN), XXXXXXX,
       XXXXXXX, C(KC_SPACE), XXXXXXX, JP_GRV,  XXXXXXX,     KC_F7, JP_PLUS,  KC_F10, XXXXXXX, XXXXXXX,
                                   _______, _______,             _______, _______
   ),
   [_SPECIAL] = LAYOUT(
     XXXXXXX, KC_F4, KC_F5, KC_F6, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
-    KC_LCTRL, KC_F1, KC_F2, KC_F3, KC_F11,              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    KC_LCTL, KC_F1, KC_F2, KC_F3, KC_F11,              XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     KC_LSFT, KC_F7, KC_F8, KC_F9, XXXXXXX,             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
                               XXXXXXX, XXXXXXX,                _______, _______
   ),
@@ -184,7 +184,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         if (lower_pressed && TIMER_DIFF_16(record->event.time, lower_pressed_time) < TAPPING_TERM) {
           // もし、長押しをしていなければ、無変換を送信する
-            tap_code(KC_MHEN);
+            tap_code(KC_INT5);
         }
         lower_pressed = false;
       }
@@ -207,7 +207,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (raise_pressed && TIMER_DIFF_16(record->event.time, raise_pressed_time) < TAPPING_TERM) {
             // https://docs.qmk.fm/#/ja/feature_macros?id=register_codeltkcgt
             // キーダウンイベント
-            tap_code(KC_HENK);
+            tap_code(KC_INT4);
             raise_pressed = false;
         }
       }
